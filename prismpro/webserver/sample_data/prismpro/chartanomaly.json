@@ -1,0 +1,111 @@
+{
+  "entity_type": "event",
+  "filtered_group_count": 1,
+  "total_entity_count": 169,
+  "filtered_entity_count": 1,
+  "group_results": [
+    {
+      "entity_results": [
+        {
+          "entity_id": "9db1b9a7-6019-404b-a3e0-6da5f24fb3df",
+          "data": [
+            {
+              "values": [
+                {
+                  "values": [
+                    "bootcamp_good_1 : CPU Usage anomaly"
+                  ],
+                  "time": 1568597345572492
+                }
+              ],
+              "name": "title"
+            },
+            {
+              "values": [
+                {
+                  "values": [
+                    "None"
+                  ],
+                  "time": 1568597345572492
+                }
+              ],
+              "name": "default_message"
+            },
+            {
+              "values": [
+                {
+                  "values": [
+                    "cluster_uuid",
+                    "vm_uuid",
+                    "lower_bound",
+                    "upper_bound",
+                    "interval_secs",
+                    "title",
+                    "indicator_proto_list",
+                    "cluster_name",
+                    "vm_name",
+                    "cluster_name",
+                    "vm_name"
+                  ],
+                  "time": 1568597345572492
+                }
+              ],
+              "name": "param_name_list"
+            },
+            {
+              "values": [
+                {
+                  "values": [
+                    "00057d50-00df-b390-0000-00000000eafd",
+                    "bootcamp_good_1",
+                    "300000",
+                    "500000",
+                    "300",
+                    "bootcamp_good_1 : CPU Usage anomaly",
+                    "ClkKD2Jvb3RjYW1wX2dvb2RfMRICdm0aGGh5cGVydmlzb3JfY3B1X3VzYWdlX3BwbTCA2rapldTkAjoECOCnEkICCGRiCUNQVSBVc2FnZWoDcHBtcAF6A0NQVQ==",
+                    "Prism-Pro-Cluster",
+                    "bootcamp_good_1",
+                    "Prism-Pro-Cluster",
+                    "bootcamp_good_1"
+                  ],
+                  "time": 1568597345572492
+                }
+              ],
+              "name": "param_value_list"
+            },
+            {
+              "values": [
+                {
+                  "values": [
+                    "hypervisor_cpu_usage_ppm"
+                  ],
+                  "time": 1568597345572492
+                }
+              ],
+              "name": "indicator_metric_name_list"
+            },
+            {
+              "values": [],
+              "name": "indicator_trigger_time_usecs_list"
+            },
+            {
+              "values": [
+                {
+                  "values": [
+                    "XXXXXX"
+                  ],
+                  "time": 1568597345570200
+                }
+              ],
+              "name": "_created_timestamp_usecs_"
+            }
+          ]
+        }
+      ],
+      "group_by_column_value": "",
+      "total_entity_count": 1,
+      "group_summaries": {}
+    }
+  ],
+  "total_group_count": 1
+}

@@ -1,0 +1,105 @@
+{
+      "metadata": {
+        "grand_total_entities": 169,
+        "total_entities": 1,
+        "page": 1,
+        "count": 1000,
+        "start_index": 1,
+        "end_index": 1
+      },
+      "entities": [
+        {
+          "id": "9db1b9a7-6019-404b-a3e0-6da5f24fb3df",
+          "alert_type_uuid": "VMAnomalyAudit",
+          "check_id": null,
+          "resolved": true,
+          "auto_resolved": false,
+          "acknowledged": true,
+          "service_vmid": "0",
+          "node_uuid": "0",
+          "created_time_stamp_in_usecs": "XXXXXXXX",
+          "last_occurrence_time_stamp_in_usecs": 0,
+          "cluster_uuid": "00057d50-00df-b390-0000-00000000eafd",
+          "originating_cluster_uuid": "cd5bc9ee-97ff-46fe-ab12-c8eae8deca2f",
+          "severity": "kAudit",
+          "impact_types": [],
+          "classifications": [
+            "Anomaly"
+          ],
+          "acknowledged_by_username": "",
+          "message": "None",
+          "detailed_message": "",
+          "alert_title": "bootcamp_good_1 : CPU Usage anomaly",
+          "acknowledged_time_stamp_in_usecs": 1568597345570200,
+          "resolved_time_stamp_in_usecs": 0,
+          "resolved_by_username": "",
+          "user_defined": false,
+          "affected_entities": [
+            {
+              "entity_type": "cluster",
+              "entity_type_display_name": "cluster",
+              "entity_name": "Prism-Pro-Cluster",
+              "uuid": "00057d50-00df-b390-0000-00000000eafd",
+              "id": ""
+            },
+            {
+              "entity_type": "vm",
+              "entity_type_display_name": "vm",
+              "entity_name": "bootcamp_good_1",
+              "uuid": "bootcamp_good_1",
+              "id": ""
+            }
+          ],
+          "context_types": [
+            "cluster_uuid",
+            "vm_uuid",
+            "lower_bound",
+            "upper_bound",
+            "interval_secs",
+            "title",
+            "indicator_proto_list",
+            "cluster_name",
+            "vm_name",
+            "cluster_name",
+            "vm_name"
+          ],
+          "context_values": [
+            "00057d50-00df-b390-0000-00000000eafd",
+            "bootcamp_good_1",
+            "300000",
+            "500000",
+            "300",
+            "bootcamp_good_1 : CPU Usage anomaly",
+            "ClkKD2Jvb3RjYW1wX2dvb2RfMRICdm0aGGh5cGVydmlzb3JfY3B1X3VzYWdlX3BwbTCA2rapldTkAjoECOCnEkICCGRiCUNQVSBVc2FnZWoDcHBtcAF6A0NQVQ==",
+            "Prism-Pro-Cluster",
+            "bootcamp_good_1",
+            "Prism-Pro-Cluster",
+            "bootcamp_good_1"
+          ],
+          "possible_causes": [],
+          "alert_details": {
+            "severity_trails": [],
+            "metric_details": [
+              {
+                "entity_id": "bootcamp_good_1",
+                "entity_type": "vm",
+                "metric_display_name": "CPU Usage",
+                "metric_name": "hypervisor_cpu_usage_ppm",
+                "comparison_operator": "kEqualTo",
+                "metric_value_details": [
+                  {
+                    "state_change_time_stamp_in_usecs": "XXXXXXXX",
+                    "metric_threshold_value": "762000",
+                    "metric_value": "800700"
+                  }
+                ],
+                "data_type": "LONG",
+                "unit": "ppm",
+                "condition_type": "ANOMALY",
+                "metric_category": "CPU"
+              }
+            ]
+          }
+        }
+      ]
+    }

@@ -1,0 +1,184 @@
+{
+    "entity_type": "event",
+    "filtered_group_count": 1,
+    "total_entity_count": 337344,
+    "filtered_entity_count": 5,
+    "group_results": [{
+        "entity_results": [{
+            "entity_id": "",
+            "data": [{
+                "values": [{
+                    "values": ["Query IO Latency anomaly"],
+                    "time": 1554828565478881
+                }],
+                "name": "title"
+            }, {
+                "values": [{
+                    "values": ["None"],
+                    "time": 1554828565478881
+                }],
+                "name": "default_message"
+            }, {
+                "values": [{
+                    "values": ["cluster_uuid", "vm_uuid", "lower_bound", "upper_bound", "interval_secs", "title", "indicator_proto_list", "cluster_name", "vm_name", "cluster_name", "vm_name"],
+                    "time": 1554828565478881
+                }],
+                "name": "param_name_list"
+            }, {
+                "values": [{
+                    "values": ["00057f0c-7a74-5531-7f33-ac1f6b134e8a", "a9e6b6af-16dc-4f55-bca4-8dfde944bd1e", "0", "290415", "300", "Query IO Latency anomaly", "CnAKJGE5ZTZiNmFmLTE2ZGMtNGY1NS1iY2E0LThkZmRlOTQ0YmQxZRICdm0aGGh5cGVydmlzb3JfY3B1X3VzYWdlX3BwbTCAqvvFuMPhAjoECO/cEUIECI2TFGIJQ1BVIFVzYWdlagNwcG1wAXoDQ1BV", "eos09", "yu-80vms-win-15", "eos09", "yu-80vms-win-15"],
+                    "time": 1554828565478881
+                }],
+                "name": "param_value_list"
+            }, {
+                "values": [{
+                    "values": ["query_io_latency"],
+                    "time": 1555960000000000
+                }],
+                "name": "indicator_metric_name_list"
+            }, {
+                "values": [],
+                "name": "indicator_trigger_time_usecs_list"
+            }, {
+                "values": [{
+                    "values": ["XXXXXXXX"],
+                    "time": 1554828565477923
+                }],
+                "name": "_created_timestamp_usecs_"
+            }]
+        }, {
+            "entity_id": "",
+            "data": [{
+                "values": [{
+                    "values": ["Cache Hit Ratio anomaly"],
+                    "time": 1555100966446602
+                }],
+                "name": "title"
+            }, {
+                "values": [{
+                    "values": ["None"],
+                    "time": 1555100966446602
+                }],
+                "name": "default_message"
+            }, {
+                "values": [{
+                    "values": ["cluster_uuid", "vm_uuid", "lower_bound", "upper_bound", "interval_secs", "title", "indicator_proto_list", "cluster_name", "vm_name", "cluster_name", "vm_name"],
+                    "time": 1555100966446602
+                }],
+                "name": "param_name_list"
+            }, {
+                "values": [{
+                    "values": ["00057f0c-7a74-5531-7f33-ac1f6b134e8a", "a9e6b6af-16dc-4f55-bca4-8dfde944bd1e", "0", "909142", "300", "Cache Hit Ratio anomaly", "Cm4KJGE5ZTZiNmFmLTE2ZGMtNGY1NS1iY2E0LThkZmRlOTQ0YmQxZRICdm0aEG1lbW9yeV91c2FnZV9wcG0wgPKzqK/L4QI6BAjWvjdCBAjO0TdiDE1lbW9yeSBVc2FnZWoDcHBtcAF6Bk1FTU9SWQ==", "eos09", "yu-80vms-win-15", "eos09", "yu-80vms-win-15"],
+                    "time": 1555100966446602
+                }],
+                "name": "param_value_list"
+            }, {
+                "values": [{
+                    "values": ["cache_hit_ratio"],
+                    "time": 1555100966446602
+                }],
+                "name": "indicator_metric_name_list"
+            }, {
+                "values": [],
+                "name": "indicator_trigger_time_usecs_list"
+            }, {
+                "values": [{
+                    "values": ["XXXXXXXX"],
+                    "time": 1555100966445684
+                }],
+                "name": "_created_timestamp_usecs_"
+            }]
+        },
+        {
+            "entity_id": "",
+            "data": [{
+                "values": [{
+                    "values": ["CPU Usage anomaly"],
+                    "time": 1555364668648200
+                }],
+                "name": "title"
+            }, {
+                "values": [{
+                    "values": ["None"],
+                    "time": 1555364668648200
+                }],
+                "name": "default_message"
+            }, {
+                "values": [{
+                    "values": ["cluster_uuid", "vm_uuid", "lower_bound", "upper_bound", "interval_secs", "title", "indicator_proto_list", "cluster_name", "vm_name", "cluster_name", "vm_name"],
+                    "time": 1555364668648200
+                }],
+                "name": "param_name_list"
+            }, {
+                "values": [{
+                    "values": ["00057f0c-7a74-5531-7f33-ac1f6b134e8a", "a9e6b6af-16dc-4f55-bca4-8dfde944bd1e", "0", "915907", "300", "CPU Usage anomaly", "Cm4KJGE5ZTZiNmFmLTE2ZGMtNGY1NS1iY2E0LThkZmRlOTQ0YmQxZRICdm0aEG1lbW9yeV91c2FnZV9wcG0wgMyu1oXT4QI6BAjD8zdCBAisojhiDE1lbW9yeSBVc2FnZWoDcHBtcAF6Bk1FTU9SWQ==", "eos09", "yu-80vms-win-15", "eos09", "yu-80vms-win-15"],
+                    "time": 1555364668648200
+                }],
+                "name": "param_value_list"
+            }, {
+                "values": [{
+                    "values": ["cpu_usage"],
+                    "time": 1555364668648200
+                }],
+                "name": "indicator_metric_name_list"
+            }, {
+                "values": [],
+                "name": "indicator_trigger_time_usecs_list"
+            }, {
+                "values": [{
+                    "values": ["YYYYYYYY"],
+                    "time": 1555364668646864
+                }],
+                "name": "_created_timestamp_usecs_"
+            }]
+        },
+
+        {
+            "entity_id": "",
+            "data": [{
+                "values": [{
+                    "values": ["Disk Byte Usage anomaly"],
+                    "time": 1555364668648200
+                }],
+                "name": "title"
+            }, {
+                "values": [{
+                    "values": ["None"],
+                    "time": 1555364668648200
+                }],
+                "name": "default_message"
+            }, {
+                "values": [{
+                    "values": ["cluster_uuid", "vm_uuid", "lower_bound", "upper_bound", "interval_secs", "title", "indicator_proto_list", "cluster_name", "vm_name", "cluster_name", "vm_name"],
+                    "time": 1555364668648200
+                }],
+                "name": "param_name_list"
+            }, {
+                "values": [{
+                    "values": ["00057f0c-7a74-5531-7f33-ac1f6b134e8a", "a9e6b6af-16dc-4f55-bca4-8dfde944bd1e", "0", "915907", "300", "Disk Byte Usage anomaly", "Cm4KJGE5ZTZiNmFmLTE2ZGMtNGY1NS1iY2E0LThkZmRlOTQ0YmQxZRICdm0aEG1lbW9yeV91c2FnZV9wcG0wgMyu1oXT4QI6BAjD8zdCBAisojhiDE1lbW9yeSBVc2FnZWoDcHBtcAF6Bk1FTU9SWQ==", "eos09", "yu-80vms-win-15", "eos09", "yu-80vms-win-15"],
+                    "time": 1555364668648200
+                }],
+                "name": "param_value_list"
+            }, {
+                "values": [{
+                    "values": ["disk_byte_usage"],
+                    "time": 1555364668648200
+                }],
+                "name": "indicator_metric_name_list"
+            }, {
+                "values": [],
+                "name": "indicator_trigger_time_usecs_list"
+            }, {
+                "values": [{
+                    "values": ["XXXXXXXX"],
+                    "time": 1555364668646864
+                }],
+                "name": "_created_timestamp_usecs_"
+            }]
+        }],
+        "group_by_column_value": "",
+        "total_entity_count": 5,
+        "group_summaries": {}
+    }],
+    "total_group_count": 1
+}

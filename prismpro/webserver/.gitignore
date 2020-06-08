@@ -1,10 +1,5 @@
-.idea
-.DS_Store
-build
 node_modules
-npm_tmp
-npm-debug.log
-coverage
-dist
-lib
-es6
+my_local_config.js
+package-lock.json
+build
+ntnx_cloud

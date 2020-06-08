@@ -1,0 +1,69 @@
+{
+  "api_version": "3.1",
+  "metadata": {
+    "kind": "action_rule",
+    "spec_version": 0
+  },
+  "spec": {
+    "resources": {
+      "name": "Default Playbook Name",
+      "is_enabled": true,
+      "trigger_list": [
+        {
+          "action_trigger_type_reference": {
+            "kind": "action_trigger_type",
+            "name": "manual_trigger"
+          },
+          "description": "",
+          "display_name": "Manual",
+          "input_parameter_values": {
+            "entity_type": "vm"
+          },
+          "instance_uuid": "aa296404-f605-4bcb-8e93-30c64e938fcd"
+        }
+      ],
+      "execution_user_reference": {
+        "kind": "user",
+        "name": "admin",
+        "uuid": "00000000-0000-0000-0000-000000000000"
+      },
+      "action_list": [
+        {
+          "action_type_reference": {
+            "kind": "action_type",
+            "name": "powershell_using_vm_entity"
+          },
+          "description": "",
+          "display_name": "Increase MSSQL Server Memory",
+          "input_parameter_values": {
+            "https": "false",
+            "password": "nutanix/4u",
+            "script_path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell whoami",
+            "username": "Administrator",
+            "vm_entity": "{{trigger[0].source_entity_info}}"
+          },
+          "instance_uuid": "cf7bf6b8-8db8-46a4-87ae-aeec3320193a",
+          "max_retries": 2,
+          "should_continue_on_failure": false
+        },
+        {
+          "action_type_reference": {
+            "kind": "action_type",
+            "name": "email_action"
+          },
+          "description": "",
+          "display_name": "Email",
+          "input_parameter_values": {
+            "to_address": "a@b.com",
+            "subject": "SQL Server Memory Increased",
+            "message_body": "The memory of the SQL instance on VM '{{trigger[0].source_entity_info.name}}' has been increased"
+          },
+          "instance_uuid": "b483a66e-d39e-4ec8-9bee-74ad0ffad3ef",
+          "max_retries": 2,
+          "should_continue_on_failure": false
+        }
+      ],
+      "should_validate": true
+    }
+  }
+}

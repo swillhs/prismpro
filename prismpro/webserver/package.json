@@ -1,14 +1,19 @@
 {
-  "name": "prism-pro-lab",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "prismproserver",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node prismpro-webserver.js",
+    "buildZip": "cd ../client; npm install; npm run build; cd ..; rm webserver.zip; mv webserver/my_local_config.js my_local_config.js; zip webserver.zip -r webserver; mv my_local_config.js webserver/my_local_config.js"
   },
-  "author": "Sarah Hernandez",
   "dependencies": {
-    "express": "^4.17.0",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.5",
+    "express": "4.17.0",
+    "http-proxy": "^1.11.1",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "ws": "^5.1.1"
   }
 }

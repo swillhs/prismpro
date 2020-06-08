@@ -1,8 +1,0 @@
-{
-  "pc_ui_username": "admin",
-  "pc_ui_password": "Nutanix/4u",
-  "pc_ssh_username": "nutanix",
-  "pc_ssh_password": "nutanix/4u",
-  "uvm_ssh_username": "root",
-  "uvm_ssh_password": "nutanix/4u"
-}

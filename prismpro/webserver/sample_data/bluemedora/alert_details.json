@@ -1,0 +1,22 @@
+{
+	"resources": {
+		"severity": "critical",
+		"title": "SQL server query average latency high",
+		"default_message": "SQL server query average latency high",
+		"indicator_list": [{
+			"entity_id":"71227951-3639-40f7-9fa7-38073cf927a3",
+				"entity_type":"vm",
+				"metric_display_name":"Avg Query Latency",
+				"metric_name":"query_io_latency",
+				"trigger_time": XXXXXXXX,
+				"comparison_operator":"kEqualTo"
+					}],
+		"is_user_defined": true,
+		"severity_trail_list": [{
+			"severity_change_time": "2019-04-11T11:15:53Z",
+			"severity": "critical"
+		}],
+		"impact_type_list": ["Performance"],
+		"type": "1023dcdb-1d3a-46a0-b9e2-507ad96759a5"
+	}
+}
