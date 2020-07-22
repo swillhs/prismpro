@@ -15,7 +15,6 @@ import 'prism-reactjs/dist/index.css';
 import LoginPage from './pages/LoginPage.jsx';
 import AlertPage from './pages/AlertPage.jsx';
 import TicketPage from './pages/TicketPage.jsx';
-import ConfigureBlueMedoraPage from './pages/ConfigureBlueMedoraPage.jsx';
 import DebugPage from './pages/DebugPage.jsx';
 import StressPage from './pages/StressPage.jsx';
 
@@ -60,8 +59,6 @@ class App extends Component {
         return <DebugPage />;
       case '/stress':
         return <StressPage />;
-      case '/databases':
-        return <ConfigureBlueMedoraPage />;
       case '/alerts':
       case '/alerts/':
         return <AlertPage />;
