@@ -37,7 +37,7 @@ class StressPage extends Component {
   renderModalHeader() {
     return (
       <div className="modal-title-container">
-        <Title size="h3">Prism Pro Lab</Title>
+        <Title size="h3">Easy Ops Lab</Title>
       </div>
     );
   }

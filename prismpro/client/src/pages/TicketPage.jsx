@@ -134,8 +134,10 @@ class TicketPage extends Component {
   }
 
   handleRowAction = (key, rowData) => {
-    if (key === 'webhook') {
+    if (key === 'webhookApprove') {
       this.callWebhook(rowData);
+    } else if (key === 'webhookDeny') {
+      this.callWebhook(rowData, null, true);
     } else if (key === 'playbook') {
       this.setState({
         rowData,
@@ -145,7 +147,7 @@ class TicketPage extends Component {
   }
 
 
-  callWebhook(rowData, selectedPlaybook) {
+  callWebhook(rowData, selectedPlaybook, isDenied) {
     this.setState({ loading: true });
     return basicFetch({
       url: '/api/nutanix/v3/action_rules/trigger',
@@ -168,7 +170,7 @@ class TicketPage extends Component {
           string2: rowData.string2,
           string3: rowData.string3,
           string4: rowData.string4,
-          string5: rowData.string5,
+          string5: isDenied ? '{"message":"The request was denied.","status":"denied"}' : '{"message":"The request was approved.","status":"approved"}',
           integer1: rowData.integer1,
           integer2: rowData.integer2,
           integer3: rowData.integer3,
@@ -196,7 +198,7 @@ class TicketPage extends Component {
     return (
       <div>
         <StackingLayout padding="20px">
-          <Title>Prism Pro Service Ticket System</Title>
+          <Title>Easy Ops Ticket System</Title>
           <Table
             oldTable={ false }
             loading={ false }
@@ -207,9 +209,12 @@ class TicketPage extends Component {
               actions: (rowData) => {
                 return [
                   {
-                    key: 'webhook',
-                    value: 'Trigger Remediation'
-                    // value: 'Approve'
+                    key: 'webhookApprove',
+                    value: 'Approve'
+                  },
+                  {
+                    key: 'webhookDeny',
+                    value: 'Deny'
                   },
                   {
                     key: 'playbook',
