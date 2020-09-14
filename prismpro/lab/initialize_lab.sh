@@ -2,6 +2,20 @@
 set -x
 
 PC_IP="$1"
+PC_USER="$2"
+PC_PASS="$3"
+
+echo "Seeding Application Discovery Data"
+
+cp mock_epoch_response.json ~/config/xdiscovery/mock_epoch_response.json
+genesis stop dpm_server
+genesis stop xdiscovery
+cluster start
+sudo systemctl start iptables
+
+echo "Registering vCenter Cluster"
+
+python vcenter_con.py $PC_IP $PC_USER $PC_PASS
 
 echo "Creating cron job for capacity"
 
