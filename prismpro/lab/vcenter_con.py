@@ -343,7 +343,6 @@ class VcenterHelper(object):
       task_uuid = res.json()["task_uuid"]
       # self.poll_current_task(task_uuid=task_uuid)
 
-
 if __name__ == "__main__":
   PC_IP = sys.argv[1]
   PRISM_USER = sys.argv[2]
