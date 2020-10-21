@@ -1,7 +1,7 @@
 //
 // Copyright (c) 2020 Nutanix Inc. All rights reserved.
 //
-// Dev server for Prism Pro Lab
+// Dev server for Prism Pro/Ultimate Lab
 //
 'use strict';
 
