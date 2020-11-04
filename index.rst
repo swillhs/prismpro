@@ -6,6 +6,8 @@
   :name: _prism_pro_labs
   :hidden:
 
+  prismops_capacity_lab/prismops_capacity_lab
+  prismops_rightsize_lab/prismops_rightsize_lab
   prismpro_xplay/prismpro_xplay
 
 .. toctree::
