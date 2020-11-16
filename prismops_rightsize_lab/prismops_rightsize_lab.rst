@@ -56,46 +56,26 @@ Using machine learning, Prism Pro then analyzes the data and applies a classific
    * **Automation:** Use some other method of automation such as powershell or REST-API to resize a VM.
 
 
-   Using this machine learning data, Prism Pro is also able to generate baselines, or expected ranges, for VM, Host and Cluster metric data. The X-FIT alogrithms learn the normal behavior of these entities and represent that as a baseline range on the different charts. Whenever a metric value deviates from this expected range, Prism Pro will raise an anomaly.
+Increase Constrained VM Memory with X-Play based on Conitional Execution
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-#. Now let's take a take a look at a VM by searching for ‘bootcamp_good’ and selecting ‘bootcamp_good_1’.
+Now let’s look at how we can take automated action to resolve some of these inefficiencies. For this lab we will assume that this VM is constrained for memory, and will show how we can automatically remediate the right sizing of this VM. We will also use a custom ticket system to give an idea of how this typical workflow could integrate with ticketing system such as ServiceNow and use string parsing and conditional execution, two of our latest capabilities added into X-Play. 
 
-   .. figure:: images/ppro_61.png
+Prism Pro now also has the ability to import and export playbooks. The steps to do so for the second playbook created below are listed in the next section. You will need to complete the rest of the steps such as setting up the alert policy and stressing the VM but if you understand how playbooks function and can be created easily you can leverage the file provided in the next section and follow the steps to save some time. We recommend reading through the steps to create trhe playbook and understanding them properly. 
 
-#. Go to Metrics > CPU Usage. Notice a dark blue line, and a lighter blue area around it. The dark blue line is the CPU Usage. The light blue area is the expected CPU Usage range for this VM. This particular VM is running an application that is upgraded at the same time each day, which explains the usage pattern. Notice that X-FIT detects the seasonality in this usage pattern and has adjusted the expected range accordingly. In this case, an anomaly has been raised for this VM, because the Usage is far above the expected range. You can also reduce the time range “Last 24 hours” to examine the chart more closely.
+#. Navigate to your **`Initials`-LinuxToolsVM**. The examples will use a VM called **ABC - LinuxToolsVM**. Note the current **Memory Capacity** of the VM, as we will later increase it with X-Play. You may need to scroll down within the **Properties** widget to find this value.
 
-   .. figure:: images/ppro_60.png
-
-#. Click **“Alert Setting”** to set an alert policy for this kind of situation.
-
-#. In the right hand side, you can change some of the configurations however you would like. In this example I have changed the Behavioral Anomaly threshold to ignore anomalies between 10% and 70%. All other anomalies will generate a Warning alert. I have also adjusted the Static threshold to Alert Critical if the CPU Usage on this VM exceeds 95%.
-
-   .. figure:: images/ppro_25.png
-
-#. Hit **Cancel** to exit the policy creation workflow.
-
-Automatically Increase Constrained VM Memory with X-Play
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-Now let's look at how we can take automated action to resolve some of these inefficiencies. For this lab we will assume that this VM is constrained for memory and will show how we can automatically remediate the right sizing of this VM. We will also use a custom Ticket system to give an idea of how this typical workflow could integrate with ticketing system such as Service Now.
-
-#. Navigate to your **`Initials`-LinuxToolsVM**. The examples will use a VM called **ABC - VM**.
-
-   .. figure:: images/rs1.png
-
-#. Note the current **Memory Capacity** of the VM, as we will later increase it with X-Play. You may need to scroll down within the **Properties** widget to find this value.
-
-   .. figure:: images/rs2.png
+   .. figure:: images/linuxvm.png
 
 #. Using the hamburger menu, navigate to **Operations** > **Playbooks**.
 
-   .. figure:: images/rs3.png
+   .. figure:: images/navigateplaybook.png
 
-#.  We will need to create a couple Playbooks for this workflow to be possible. Let's start by clicking **Create Playbook**. We will first be creating the Playbook that will be increasing the Memory of the VM.
+#. We will need to create a couple of Playbooks for this workflow to be possible. Let's start by clicking **Create Playbook**. We will first be creating the Playbook that will be increasing the Memory of the VM. We want to create a playbook that reads in a string coming from the ticket system (approved or denied in our case) and have conditional branching and execution of the next steps accordingly. 
 
    .. figure:: images/rs3b.png
 
-#. Select **Webhook** as the trigger. Using this trigger exposes a public API that allows scripts and third party tools such as ServiceNow to use this Webhook to call back into Prism Central and trigger this playbook. In our case, this Playbook will be called by the ticket system to initiate the remediation steps.
+#. Select **Webhook** as the trigger. Using this trigger exposes a public API that allows scripts and third party tools such as ServiceNow to use this Webhook to call back into Prism Central and trigger this playbook. In our case, this Playbook will be called by the ticket system to initiate conditional execution.
 
    .. figure:: images/rs16.png
 
@@ -103,21 +83,29 @@ Now let's look at how we can take automated action to resolve some of these inef
 
    .. figure:: images/rs17.png
 
-#. Next we would like to select the **VM Add Memory** action.
+#. The first action we will add is the newly added String Parse action. This action allows the user to parse data coming from a string which can then subsequently be used in the succeeding actions. 
 
-   .. figure:: images/rs18.png
+   .. figure:: images/addparse.png
 
-#. Use the **Parameters** link to fill in the **entity1** parameter which is exposed from the Webhook trigger. The caller will pass in the VM to act on as entity1. Set the remainder of the fields according to the screen below. Then click **Add Action** to add the next action.
+#. Use the **Parameters** link to fill in the **string5** parameter exposed from the webhook trigger. In our example this will be the condition passed in from the API call. We have the format options for JSON, XML and Regex. This example we’ll use a JSON path. Fill in the other fields according to the screen below. Then click **Add Action** to add the next action.
 
-   .. figure:: images/rs19.png
+   .. figure:: images/editparse.png
 
-#. Select the **Resolve Alert** action.
+#. Now we’ll add our first condition - Select the **Branch** action. This gives the ability to execute succeeding actions based on coditions and criteria matched.
 
-   .. figure:: images/rs19b.png
+   .. figure:: images/addbranch.png
 
-#. Use the **Parameters** link to fill in the **entity2** parameter which is exposed from the Webhook trigger. The caller will pass the Alert to be resolved as entity2. Then click **Add Action** and choose the Email action.
+#. We will use the **IF** condition and choose our Operand as the **Parsed String** from the previous action using the **Parameters** link. Fill in the other fields according to the screen below. We can also add a description to the branch action for easier readability. Next we'll add the actions we want to execute if the condition is true. Click add **Add Action** once you have filled the fields for the **Branch** action.
 
-   .. figure:: images/rs19c.png
+   .. figure:: images/editbranch.png
+
+#. First action we want to take is add memory to the VM. Select the **VM Add Memory** action. Use the **Parameters** link to fill in the **entity1** parameter which is exposed from the Webhook trigger. The caller will pass in the VM to act on as entity1. Set the remainder of the fields according to the screen below. Then click **Add Action** to add the next action.
+
+   .. figure:: images/addmemory.png
+
+#. Select the **Resolve Alert** action. Use the **Parameters** link to fill in the **entity2** parameter which is exposed from the Webhook trigger. The caller will pass the Alert to be resolved as entity2. Then click **Add Action** and choose the **Email** action.
+
+   .. figure:: images/resolvealert.png
 
 #. Fill in the field in the email action. Here are the examples.
 
@@ -129,22 +117,34 @@ Now let's look at how we can take automated action to resolve some of these inef
 
       You are welcome to compose your own subject message. The above is just an example. You could use the “parameters” to enrich the message.
 
-   .. figure:: images/rs20.png
+   .. figure:: images/approvedemail.png
 
-#. Last, we would like to call back to the ticket service to resolve the ticket in the ticket service. Click **Add Action** to add the REST API action. Fill in the following values replacing the <PrismOpsLabUtilityServer_IP_ADDRESS> in the URL field.
+#. Now, we would like to call back to the ticket service to resolve the ticket in the ticket service. Click **Add Action** to add the **REST API** action. Fill in the following values replacing the <PrismOpsLabUtilityServer_IP_ADDRESS> in the URL field. This condcludes our first conditional branch for an approved request.
 
    - **Method:** PUT
    - **URL:** http://<PrismOpsLabUtilityServer_IP_ADDRESS>/resolve_ticket
    - **Request Body:** ``{"incident_id":"{{trigger[0].entity1.uuid}}"}``
    - **Request Header:** Content-Type:application/json;charset=utf-8
 
-   .. figure:: images/rs21.png
+   .. figure:: images/resolveticket.png
+
+#. Next we’ll add the 2nd condition for when the request is denied. Click **Add Action** and choose the **Branch** action. We will use the **Else** condition. We could also add **Else If** we wanted to use other operands. For now we’ll use just Else. We can also add a description for the Branch. 
+
+   .. figure:: images/elsebranch.png
+
+#. On this condition we just want to send out an email notifying the user that the request has been denied and the memory was not added. Click **Add Action** and choose the **Email** action. Fill in the field in the email action. Here is an example.
+
+   - **Recipient:** - Fill in your email address.
+   - **Subject:** - ``Memory Increase Request Denied``
+   - **Message:** - ``The request to increase the memory of your VM {{trigger[0].entity1.name}} by 1 GB was denied. If you'd like to review the ticket please navigate to http://<PrismOpsLabUtilityServer_IP_ADDRESS>/ticketsystem``
+
+   .. figure:: images/deniedemail.png
 
 #. Click **Save & Close** button and save it with a name “*Initials* - Resolve Service Ticket”. **Be sure to enable the ‘Enabled’ toggle.**
 
-   .. figure:: images/rs22.png
 
-#. Next we will create a custom action to be used in our 2nd playbook. Click on **Action Gallery** from the left hand side menu.
+
+#. Next we will create a custom action to be used in our 2nd playbook. Click on **Action Gallery** from the left hand side menu. Alternatively, you can skip to the next section to import the playbook needed for this part. You **Will** need to complete the rest of the steps to trigger the workflow. 
 
    .. figure:: images/rs3c.png
 
@@ -168,7 +168,7 @@ Now let's look at how we can take automated action to resolve some of these inef
 
 #. We will need to copy the Webhook ID from the first Playbook we created so that it can be passed in the generate ticket step. Open up your Resolve Service Ticket playbook and copy the Webhook ID to your clipboard.
 
-   .. figure:: images/rs6a.png
+   .. figure:: images/webhookid.png
 
 #. Now we will create a Playbook to automate the generation of a service ticket. Close your Playbook and then click **Create Playbook** at the top of the table view.
 
@@ -184,11 +184,11 @@ Now let's look at how we can take automated action to resolve some of these inef
 
 #. Select the *Specify VMs* radio button and choose the VM you created for the lab. This will make it so only alerts raised on your VM will trigger this Playbook.
 
-   .. figure:: images/rs10.png
+   .. figure:: images/selectvm.png
 
 #. First, we would like to generate a ticket for this alert. Click **Add Action** on the left side and select the **Generate Service Ticket** action you created. Notice the details from the **Generate Service Ticket** Action you created are automatically filled in for you. Go ahead and replace the **<ENTER_ID_HERE>** text with the Webhook ID you copied to your clipboard.
 
-   .. figure:: images/rs11.png
+   .. figure:: images/serviceticket.png
 
 #. Next we would like to notify someone that the ticket was created by X-Play. Click **Add Action** and select the Email action. Fill in the field in the email action. Here are the examples. Be sure to replace <PrismOpsLabUtilityServer_IP_ADDRESS> in the message with it's IP Address.
 
@@ -204,35 +204,63 @@ Now let's look at how we can take automated action to resolve some of these inef
 
 #. Now let's trigger the workflow. Navigate to the tab you opened in the setup with the **/alerts** URL [example 10.38.17.12/alerts]. Select the Radio for **VM Memory Constrained** and input your VM. Click the **Simulate Alert** button. This will simulate a memory constrained alert on your VM.
 
-   .. figure:: images/rs23.png
+   .. figure:: images/alertsimulate.png
 
 #. You should recieve an email to the email address you put down in the first playbook. It may take up to 5 minutes.
 
-   .. figure:: images/rs24.png
+   .. figure:: images/ticketemail.png
 
 #. Inside the email click the link to visit the ticket system. Alternatively you can directly access the ticket system by navigating to http://`<PrismOpsLabUtilityServer_IP_ADDRESS>`/ticketsystem from a new tab in your browser.
 
-   .. figure:: images/rs25.png
+   .. figure:: images/ticketsystem.png
 
-#. Identify the ticket created for your VM, and click the vertical dots icon to show the Action menu. Click the **Trigger Remediation** option. This will call the Webhook that was passed in the REST API to generate the service ticket, which will trigger the Resolve Service Ticket Playbook. It will pass on the information for the VM and Alert that triggered the workflow.
+#. Identify the ticket created for your VM, and click the vertical dots icon to show the Action menu. Click the **Deny** option. This will call the Webhook that was passed in the REST API to generate the service ticket, which will trigger the Resolve Service Ticket Playbook. It will pass on the condition for branching action and execute the **Denied** workflow. You should receive an email within a few minutes with the message input for this condition.
 
-   .. figure:: images/rs26.png
+   .. figure:: images/ticketoption.png
 
-#. Switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials` - Resolve Service Ticket** Playbook and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. Click on the title of the Play in the table to take a closer look.
 
-   .. figure:: images/rs29.png
+#. Switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials` - Resolve Service Ticket** Playbook and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. The sections in this view can be expanded by clicking to show more details for each item. If there were any errors, they would also be surfaced in this view. You can click on the **String Parser** action to confirmt that the right condition was passed in from the webhook.
 
-#. The sections in this view can be expanded to show more details for each item. If there were any errors, they would also be surfaced in this view.
+   .. figure:: images/deniedplay.png
 
-   .. figure:: images/rs30.png
+
+#. Now navigate back to the ticket system either using the link in the denied email or going directly to http://`<PrismOpsLabUtilityServer_IP_ADDRESS>`/ticketsystem. Identify the ticket created for your VM, and click the vertical dots icon to show the Action menu. Click the **Approve** option. This will call the Webhook that was passed in the REST API to generate the service ticket, which will trigger the Resolve Service Ticket Playbook. It will pass on the condition for branching action and execute the **Approved** workflow. It will also pass on the information for the VM and Alert that triggered the workflow so the following actions to add memory and resolve alert are also executed. 
+
+   .. figure:: images/ticketoption.png
+
+#. Switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials` - Resolve Service Ticket** Playbook and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. The sections in this view can be expanded to show more details for each item. If there were any errors, they would also be surfaced in this view. You can click on the **String Parser** action to confirmt that the right condition was passed in from the webhook.
+
+   .. figure:: images/approvedbranch.png
 
 #. You can navigate back to your VM and verify that the Memory was indeed increased by 1 GiB.
 
-   .. figure:: images/rs31.png
+   .. figure:: images/finalmemory.png
 
 #. You should also get an email telling you that the playbook ran.
 
-   .. figure:: images/rs32.png
+   .. figure:: images/successemail.png
+
+Importing/Exporting Playbooks
++++++++++++++++++++++++++++++++++++++++++++
+
+X-Play now has the ability to import and export playbooks across Prism Centrals. In the example below we will show how to import the playbook that is created in the preceding steps. The user will still need to create the alert policies and go through the workflow to trigger the alert as listed in the steps in the previous section.
+
+#. Go to Playbooks page and click on **Import** 
+
+ .. figure:: images/import0.png
+
+#. You will need to choose the Binary file that you downloaded as the playbook to import. 
+
+ .. figure:: images/import1.png
+
+#. You will see some validation errors since the certain fields such as credentials and URLs will be different for your environment. Click on **Import**, we will resolve these errors in the next step.
+
+ .. figure:: images/import2.png
+
+#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwrods**, **URLs** and **IP Addresses** is correct according to your environment. Refer to the playbook creation steps above to confirm these fields. Once you have changed these fields click on **Save & Close**. If validation errors are still present, the pop-up will say so. otherwise remember to click **Enable** and add your Initials to the playbook name before clicking **Save**
+
+ .. figure:: images/rsimport1.png
+
 
 Takeaways
 .........
@@ -241,8 +269,8 @@ Takeaways
 
 - X-FIT is our machine learning engine to support smart IT OPS, including anomaly detection, and inefficiency detection.
 
-- X-Play, the IFTTT for the enterprise, is our engine to enable the automation of daily operations tasks.
-
 - X-Play enables admins to confidently automate their daily tasks within minutes.
 
 - X-Play is extensive that can use customer’s existing APIs and scripts as part of its Playbooks, and can integrate nicely with customers existing ticketing workflows.
+
+- X-Play can enable automation of daily operations tasks with a complete IFTTT workflow thanks to conditional execution.
