@@ -255,7 +255,21 @@ X-Play now has the ability to import and export playbooks across Prism Centrals.
 
  .. figure:: images/import2.png
 
-#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwrods**, **URLs** and **IP Addresses** is correct according to your environment. Refer to the playbook creation steps above to confirm these fields. Once you have changed these fields click on **Save & Close**. If validation errors are still present, the pop-up will say so. otherwise remember to click **Enable** and add your Initials to the playbook name before clicking **Save**
+#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwrods**, **URLs** and **IP Addresses** is updated according to your environment. Refer to the playbook creation steps above to confirm these fields. 
+
+#. First you will need to specify your VM for the alert. Click on the trigger, make sure it is the right Alert Policy and choose your VM from the dropdown. 
+
+ .. figure:: images/rsimport2.png
+
+#. Then you will need the change the **URL** in the **Generate Service Ticket** action. Change the IP Address to your **<PrismOpsLabUtilityServer_IP_ADDRESS>** in the URL. 
+
+ .. figure:: images/rsimport3.png
+
+#. Last, make sure the email address in the **Email** action is updated to your email address. 
+
+ .. figure:: images/rsimport4.png
+
+#. Once you have changed these fields click on **Save & Close**. If validation errors are still present, the pop-up will say so. otherwise remember to click **Enable** and add your Initials to the playbook name before clicking **Save**
 
  .. figure:: images/rsimport1.png
 
