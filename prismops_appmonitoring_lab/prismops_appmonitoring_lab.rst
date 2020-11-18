@@ -49,7 +49,7 @@ Prism Ultimate includes the SQL Server monitoring pack which allows IT admin to 
 
    .. figure:: images/appmonitoring3.png
 
-#. Choose your SQL Server Host IP from the dropdown list. This is the IP address of the MSSQL server VM you configured for this lab. 
+#. Choose your SQL Server Host IP from the dropdown list. This is the IP address of the MSSQL server VM configured for this lab, confirm that it is the right IP address by checking on the VMs page.
 
    .. figure:: images/appmonitoring4.png
 
@@ -68,6 +68,10 @@ Prism Ultimate includes the SQL Server monitoring pack which allows IT admin to 
 
    .. figure:: images/sqlqueries.png
 
+#. Since the SQL Monitoring has just been setup, it will take time for the metrics to populate for a better view of the charts. The figure below shows an example of how the charts would look once the moniotoring has been running for a while. We can see that in the **CPU Utilization** chart anomalies are picked up on based on machine learned baselines just like we do for VM data. 
+
+   .. figure:: images/sqlcharts.png
+
 #. Now we will create an alert policy for the **Buffer Pool Size** and a playbook based on that alert so we can see how we can extend the simplicity of our powerful X-Play automation onto applications as well with Prism Ultimate. Scroll down to the **Buffer Pool Size** metric and click on **Actions** and choose **alert settings**.
 
    .. figure:: images/bufferalert1.png
@@ -76,7 +80,7 @@ Prism Ultimate includes the SQL Server monitoring pack which allows IT admin to 
 
    .. figure:: images/bufferalert2.png
 
-#. For the next part of this lab, if you understand how to set up Playbooks already and wish to do so, you have the option to skip the setup of the next Playbook. Instead follow the steps under Importing/Exporting Playbooks below. We recommend reading through the steps to create the Playbook to better understand what it is doing. 
+#. For the next part of this lab, if you understand how to set up Playbooks already and wish to do so, you have the option to skip the setup of the next Playbook. Instead follow the steps under the Importing/Exporting Playbooks section below. We recommend reading through the steps to create the Playbook to better understand what it is doing. 
 
 #. Now we will create the playbook which we want to execute when this alert policy is triggered. The actions we want to take are running a powershell script on the VM to collect logs and then uploading those logs onto a google drive so we can review what went wrong. Choose **Alert** as the trigger for your playbook and specifiy the alert policy you just created. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**  
 
@@ -109,11 +113,11 @@ Prism Ultimate includes the SQL Server monitoring pack which allows IT admin to 
 
    .. figure:: images/sqlplay6.png
 
-#. Use the **Parameters** link to get the parsed string from the previous action i.e. the VM IP for the **IP Address/Hostname** field. Provide the SQL VM credentials listed below. Provide the followng path to script and replace **Name** with your name so you can recognize your log file in the google drive. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
+#. Use the **Parameters** link to get the parsed string from the previous action i.e. the VM IP for the **IP Address/Hostname** field. Provide the SQL VM credentials listed below. Provide the followng path to script and replace <Name> with your name so you can recognize your log file in the google drive. Make sure to enter only your first name or full name without any spaces in betweeen since the script will read in only one string, example - **firstname_lastname**. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    - **Username: Administrator** 
    - **Password: Nutanix/4u**.
-   - **JSON Path:** C:\\Users\\Administrator\\Desktop\\UploadToGDrive.ps1 -id Name
+   - **JSON Path:** C:\\Users\\Administrator\\Desktop\\UploadToGDrive.ps1 -id <Name>
 
   .. figure:: images/sqlplay7.png
 
@@ -121,7 +125,7 @@ Prism Ultimate includes the SQL Server monitoring pack which allows IT admin to 
 
   .. figure:: images/sqlplay8.png
 
-#. In the email we want to let teh user know that a alert has been raised and a log file has been uploaded to a google drive link that we will provide so they can take a look. Fill in the following fields
+#. In the email we want to let teh user know that a alert has been raised and a log file has been uploaded to a google drive link that we will provide so they can take a look. Fill in the following fields. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
       - **Recipient:** - Fill in your email address.
       - **Subject :** - ``X-Play notification for {{trigger[0].alert_entity_info.name}}``
@@ -129,7 +133,7 @@ Prism Ultimate includes the SQL Server monitoring pack which allows IT admin to 
 
   .. figure:: images/sqlplay9.png
 
-#. Click **Save & Close** button and save it with a name “*Initials* - High Buffer Pool Size”. **Be sure to enable the ‘Enabled’ toggle.**
+#. Click **Save & Close** button and save it with a name “*Initials* - High Buffer Pool Size”. **Be sure to enable the ‘Enabled’ toggle.** **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
   .. figure:: images/sqlplay10.png
 
@@ -172,11 +176,11 @@ X-Play now has the ability to import and export playbooks across Prism Centrals.
 
  .. figure:: images/import2.png
 
-#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwords**, **URLs** and **IP Addresses** is correct according to your environment. Refer to the playbook creation steps above to confirm these fields
+#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwords**, **URLs** and **IP Addresses** for each of the Actions is correct according to your environment. Refer to the playbook creation steps above to confirm these fields. 
 
  .. figure:: images/import3.png
 
-#. Once you have changed these fields click on **Save & Close**. If validation errors are still present, the pop-up will say so. otherwise remember to click **Enable** and add your Initials to the playbook name before clicking **Save**
+#. The **REST API** action will need to be updated wiht the Prism Central password. The **IP Address Powershell** action will need to have the VM password - **Nutanix/4u** and the name of the user in path to the script. The email action should have your email address. Once you have changed these fields click on **Save & Close**. If validation errors are still present, the pop-up will say so. otherwise remember to click **Enable** and add your Initials to the playbook name before clicking **Save**
 
  .. figure:: images/import4.png
 
