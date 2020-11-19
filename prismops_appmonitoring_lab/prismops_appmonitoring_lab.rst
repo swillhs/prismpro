@@ -164,6 +164,8 @@ Importing/Exporting Playbooks
 
 X-Play now has the ability to import and export playbooks across Prism Centrals. In the example below we will show how to import the playbook that is created in the preceding steps. The user will still need to create the alert policies and go through the workflow to trigger the alert as listed in the steps in the previous section. We recommend reading through the steps to create the playbook and understanding them properly. 
 
+#. Download the following file which is an export of the playbook you will need. 
+
 #. Go to Playbooks page and click on **Import** 
 
  .. figure:: images/import0.png
@@ -176,13 +178,25 @@ X-Play now has the ability to import and export playbooks across Prism Centrals.
 
  .. figure:: images/import2.png
 
-#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwords**, **URLs** and **IP Addresses** for each of the Actions is correct according to your environment. Refer to the playbook creation steps above to confirm these fields. 
+#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once opened the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwords**, **URLs** and **IP Addresses** for each of the Actions is correct according to your environment. Click on **Update** to change fields in the playbook. Refer to the playbook creation steps above to confirm these fields. 
 
- .. figure:: images/import3.png
+#. First you will need to make sure the alert policy is correct for your playbook. Click on the trigger and choose the Alert Policy you created for the Buffer Pool Size metric above.  
 
-#. The **REST API** action will need to be updated wiht the Prism Central password. The **IP Address Powershell** action will need to have the VM password - **Nutanix/4u** and the name of the user in path to the script. The email action should have your email address. Once you have changed these fields click on **Save & Close**. If validation errors are still present, the pop-up will say so. otherwise remember to click **Enable** and add your Initials to the playbook name before clicking **Save**
+#. Then you will need to change the **Password** in the **REST API** action to lookup the VM IP. Change the **Password** field to your Prism Central password.  
 
- .. figure:: images/import4.png
+ .. figure:: images/import5.png
+
+#. Next you need to change the **Password** in the **IP Address Powershell** action to the SQL VM password - **Nutanix/4u** and the name of the user in path to the script to your name(ABC in the figure below). 
+
+ .. figure:: images/import6.png
+
+#. Last, make sure the email address in the **Email** action is updated to your email address. 
+
+ .. figure:: images/import7.png
+
+#. Once you have changed these fields click on **Save & Close**. If validation errors are still present, the pop-up will say so. otherwise remember to click **Enable** and add your Initials to the playbook name before clicking **Save**
+
+ .. figure:: images/import8.png
 
 
 Application Discovery with Prism Ultimate
