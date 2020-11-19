@@ -61,8 +61,6 @@ Increase Constrained VM Memory with X-Play based on Conitional Execution
 
 Now let’s look at how we can take automated action to resolve some of these inefficiencies. For this lab we will assume that this VM is constrained for memory, and will show how we can automatically remediate the right sizing of this VM. We will also use a custom ticket system to give an idea of how this typical workflow could integrate with ticketing system such as ServiceNow and use string parsing and conditional execution, two of our latest capabilities added into X-Play. 
 
-Prism Pro now also has the ability to import and export playbooks. The steps to do so for the second playbook created below are listed in the next section. You will need to complete the rest of the steps such as setting up the alert policy and stressing the VM but if you understand how playbooks function and can be created easily you can leverage the file provided in the next section and follow the steps to save some time. We recommend reading through the steps to create trhe playbook and understanding them properly. 
-
 #. Navigate to your **`Initials`-LinuxToolsVM**. The examples will use a VM called **ABC - LinuxToolsVM**. Note the current **Memory Capacity** of the VM, as we will later increase it with X-Play. You may need to scroll down within the **Properties** widget to find this value.
 
    .. figure:: images/linuxvm.png
@@ -87,15 +85,15 @@ Prism Pro now also has the ability to import and export playbooks. The steps to 
 
    .. figure:: images/addparse.png
 
-#. Use the **Parameters** link to fill in the **string5** parameter exposed from the webhook trigger. In our example this will be the condition passed in from the API call. We have the format options for JSON, XML and Regex. This example we’ll use a JSON path. Fill in the other fields according to the screen below. Then click **Add Action** to add the next action.
+#. Use the **Parameters** link to fill in the **string5** parameter exposed from the webhook trigger. In our example this will be the condition passed in from the API call. We have the format options for JSON, XML and Regex. This example we’ll use a JSON path. The input from the webhook will in in the format **{"message":"The request was approved.","status":"approved"}** or **{"message":"The request was denied.","status":"denied"}**. We will picking out the status field as **string5** to check if the request was approved or denied. Fill in the other fields according to the screen below. Then click **Add Action** to add the next action.
 
    .. figure:: images/editparse.png
 
-#. Now we’ll add our first condition - Select the **Branch** action. This gives the ability to execute succeeding actions based on coditions and criteria matched.
+#. Now we’ll add our first condition - Select the **Branch** action. The branch action gives the ability to execute different action sequences based on the conditions and criteria matched.
 
    .. figure:: images/addbranch.png
 
-#. We will use the **IF** condition and choose our Operand as the **Parsed String** from the previous action using the **Parameters** link. Fill in the other fields according to the screen below. We can also add a description to the branch action for easier readability. Next we'll add the actions we want to execute if the condition is true. Click add **Add Action** once you have filled the fields for the **Branch** action.
+#. We will use the **IF** condition and choose our Operand as the **Parsed String** from the previous action using the **Parameters** link. Fill in the other fields according to the screen below. We can also add a description to the branch action to understand that this is handling the case where the request is approved. Up next to the action name Click **Add Description**, fill in the description and Click **Save** to save the description. Next we'll add the actions we want to execute if the condition is true. Click add **Add Action** once you have filled the fields for the **Branch** action.
 
    .. figure:: images/editbranch.png
 
@@ -119,7 +117,7 @@ Prism Pro now also has the ability to import and export playbooks. The steps to 
 
    .. figure:: images/approvedemail.png
 
-#. Now, we would like to call back to the ticket service to resolve the ticket in the ticket service. Click **Add Action** to add the **REST API** action. Fill in the following values replacing the <PrismOpsLabUtilityServer_IP_ADDRESS> in the URL field. This condcludes our first conditional branch for an approved request.
+#. Now, we would like to call back to the ticket service to resolve the ticket in the ticket service. Click **Add Action** to add the **REST API** action. Fill in the following values replacing the <PrismOpsLabUtilityServer_IP_ADDRESS> in the URL field. This concludes our first conditional branch for an approved request.
 
    - **Method:** PUT
    - **URL:** http://<PrismOpsLabUtilityServer_IP_ADDRESS>/resolve_ticket
@@ -128,7 +126,7 @@ Prism Pro now also has the ability to import and export playbooks. The steps to 
 
    .. figure:: images/resolveticket.png
 
-#. Next we’ll add the 2nd condition for when the request is denied. Click **Add Action** and choose the **Branch** action. We will use the **Else** condition. We could also add **Else If** we wanted to use other operands. For now we’ll use just Else. We can also add a description for the Branch. 
+#. Next we’ll add the 2nd condition for when the request is denied. Click **Add Action** and choose the **Branch** action. We will use the **Else** condition. We could also add **Else If** we wanted to check more than just the approved and denied condition. For now we’ll use just **Else**. We can also add a description for this action as "Denied" following the same steps that we did for the "Approved" Branch description above.
 
    .. figure:: images/elsebranch.png
 
@@ -142,17 +140,17 @@ Prism Pro now also has the ability to import and export playbooks. The steps to 
 
 #. Click **Save & Close** button and save it with a name “*Initials* - Resolve Service Ticket”. **Be sure to enable the ‘Enabled’ toggle.**
 
+#. For the next part of this lab, if you understand how to set up Playbooks already and wish to do so, you have the option to skip the setup of the next Playbook. Instead follow the steps under the Importing/Exporting Playbooks section below. We recommend reading through the steps to create the Playbook to better understand what it is doing. 
 
-
-#. Next we will create a custom action to be used in our 2nd playbook. Click on **Action Gallery** from the left hand side menu. Alternatively, you can skip to the next section to import the playbook needed for this part. You **Will** need to complete the rest of the steps to trigger the workflow. 
+#. Next we will create a custom action to be used in our 2nd playbook. Click on **Action Gallery** from the left hand side menu. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/rs3c.png
 
-#. Select the **REST API** action and choose the **Clone** operation from the actions menu.
+#. Select the **REST API** action and choose the **Clone** operation from the actions menu. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/rs4.png
 
-#. Fill in the following values replacing your initials in the *Initials* part, and the <PrismOpsLabUtilityServer_IP_ADDRESS> in the URL field. Click **Copy**.
+#. Fill in the following values replacing your initials in the *Initials* part, and the <PrismOpsLabUtilityServer_IP_ADDRESS> in the URL field. Click **Copy**. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    - **Name:** *Initials* - Generate Service Ticket
    - **Method:** POST
@@ -162,35 +160,35 @@ Prism Pro now also has the ability to import and export playbooks. The steps to 
 
    .. figure:: images/rs5.png
 
-#. Now switch to the Playbooks list by clicking the **List** item in the left hand menu.
+#. Now switch to the Playbooks list by clicking the **List** item in the left hand menu. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/rs6.png
 
-#. We will need to copy the Webhook ID from the first Playbook we created so that it can be passed in the generate ticket step. Open up your Resolve Service Ticket playbook and copy the Webhook ID to your clipboard.
+#. We will need to copy the Webhook ID from the first Playbook we created so that it can be passed in the generate ticket step. Open up your Resolve Service Ticket playbook and copy the Webhook ID to your clipboard. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/webhookid.png
 
-#. Now we will create a Playbook to automate the generation of a service ticket. Close your Playbook and then click **Create Playbook** at the top of the table view.
+#. Now we will create a Playbook to automate the generation of a service ticket. Close your Playbook and then click **Create Playbook** at the top of the table view. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/rs7.png
 
-#. Select **Alert** as a trigger
+#. Select **Alert** as a trigger. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/rs8.png
 
-#. Search and select **VM {vm_name} Memory Constrained** as the alert policy, since this is the issue we are looking to take automated steps to remediate.
+#. Search and select **VM {vm_name} Memory Constrained** as the alert policy, since this is the issue we are looking to take automated steps to remediate. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/rs9.png
 
-#. Select the *Specify VMs* radio button and choose the VM you created for the lab. This will make it so only alerts raised on your VM will trigger this Playbook.
+#. Select the *Specify VMs* radio button and choose the VM you created for the lab. This will make it so only alerts raised on your VM will trigger this Playbook. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/selectvm.png
 
-#. First, we would like to generate a ticket for this alert. Click **Add Action** on the left side and select the **Generate Service Ticket** action you created. Notice the details from the **Generate Service Ticket** Action you created are automatically filled in for you. Go ahead and replace the **<ENTER_ID_HERE>** text with the Webhook ID you copied to your clipboard.
+#. First, we would like to generate a ticket for this alert. Click **Add Action** on the left side and select the **Generate Service Ticket** action you created. Notice the details from the **Generate Service Ticket** Action you created are automatically filled in for you. Go ahead and replace the **<ENTER_ID_HERE>** text with the Webhook ID you copied to your clipboard. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/serviceticket.png
 
-#. Next we would like to notify someone that the ticket was created by X-Play. Click **Add Action** and select the Email action. Fill in the field in the email action. Here are the examples. Be sure to replace <PrismOpsLabUtilityServer_IP_ADDRESS> in the message with it's IP Address.
+#. Next we would like to notify someone that the ticket was created by X-Play. Click **Add Action** and select the Email action. Fill in the field in the email action. Here are the examples. Be sure to replace <PrismOpsLabUtilityServer_IP_ADDRESS> in the message with it's IP Address. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    - **Recipient:** - Fill in your email address.
    - **Subject :** - ``Service Ticket Pending Approval: {{trigger[0].alert_entity_info.name}}``
@@ -198,7 +196,7 @@ Prism Pro now also has the ability to import and export playbooks. The steps to 
 
    .. figure:: images/rs13.png
 
-#. Click **Save & Close** button and save it with a name “*Initials* - Generate Service Ticket for Constrained VM”. **Be sure to enable the ‘Enabled’ toggle.**
+#. Click **Save & Close** button and save it with a name “*Initials* - Generate Service Ticket for Constrained VM”. **Be sure to enable the ‘Enabled’ toggle.** **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
    .. figure:: images/rs14.png
 
@@ -219,7 +217,7 @@ Prism Pro now also has the ability to import and export playbooks. The steps to 
    .. figure:: images/ticketoption.png
 
 
-#. Switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials` - Resolve Service Ticket** Playbook and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. The sections in this view can be expanded by clicking to show more details for each item. If there were any errors, they would also be surfaced in this view. You can click on the **String Parser** action to confirmt that the right condition was passed in from the webhook.
+#. While you wait for the email, switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials` - Resolve Service Ticket** Playbook and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. The sections in this view can be expanded by clicking to show more details for each item. If there were any errors, they would also be surfaced in this view. You can click on the **String Parser** action to confirm that the right condition was passed in from the webhook.
 
    .. figure:: images/deniedplay.png
 
@@ -228,7 +226,7 @@ Prism Pro now also has the ability to import and export playbooks. The steps to 
 
    .. figure:: images/ticketoption.png
 
-#. Switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials` - Resolve Service Ticket** Playbook and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. The sections in this view can be expanded to show more details for each item. If there were any errors, they would also be surfaced in this view. You can click on the **String Parser** action to confirmt that the right condition was passed in from the webhook.
+#. Switch back to the previous tab with the Prism Central console open. Open up the details for the **`Initials` - Resolve Service Ticket** Playbook and click the **Plays** tab towards the top of the view to take a look at the Plays that executed for this playbook. The sections in this view can be expanded to show more details for each item. If there were any errors, they would also be surfaced in this view. You can click on the **String Parser** action to confirm that the right condition was passed in from the webhook.
 
    .. figure:: images/approvedbranch.png
 
@@ -243,7 +241,9 @@ Prism Pro now also has the ability to import and export playbooks. The steps to 
 Importing/Exporting Playbooks
 +++++++++++++++++++++++++++++++++++++++++++
 
-X-Play now has the ability to import and export playbooks across Prism Centrals. In the example below we will show how to import the playbook that is created in the preceding steps. The user will still need to create the alert policies and go through the workflow to trigger the alert as listed in the steps in the previous section.
+X-Play now has the ability to import and export playbooks across Prism Centrals. In the example below we will show how to import the playbook that is created in the preceding steps. The user will still need to create the alert policies and go through the workflow to trigger the alert as listed in the steps in the previous section. We recommend reading through the steps to create the playbook and understanding them properly. 
+
+#. Download the following file which is an export of the playbook you will need.
 
 #. Go to Playbooks page and click on **Import** 
 
@@ -257,7 +257,21 @@ X-Play now has the ability to import and export playbooks across Prism Centrals.
 
  .. figure:: images/import2.png
 
-#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwrods**, **URLs** and **IP Addresses** is correct according to your environment. Refer to the playbook creation steps above to confirm these fields. Once you have changed these fields click on **Save & Close**. If validation errors are still present, the pop-up will say so. otherwise remember to click **Enable** and add your Initials to the playbook name before clicking **Save**
+#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwrods**, **URLs** and **IP Addresses** is updated according to your environment. Click on **Update*8 to change fields in the playbook. Refer to the playbook creation steps above to confirm these fields.
+
+#. First you will need to specify your VM for the alert. Click on the trigger, make sure it is the right Alert Policy and choose your VM from the dropdown. 
+
+ .. figure:: images/rsimport2.png
+
+#. Then you will need the change the **URL** in the **Generate Service Ticket** action. Change the IP Address to your **<PrismOpsLabUtilityServer_IP_ADDRESS>** in the URL. 
+
+ .. figure:: images/rsimport3.png
+
+#. Last, make sure the email address in the **Email** action is updated to your email address. 
+
+ .. figure:: images/rsimport4.png
+
+#. Once you have changed these fields click on **Save & Close**. If validation errors are still present, the pop-up will say so. otherwise remember to click **Enable** and add your Initials to the playbook name before clicking **Save**
 
  .. figure:: images/rsimport1.png
 
