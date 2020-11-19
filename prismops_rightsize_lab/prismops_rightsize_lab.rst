@@ -243,7 +243,7 @@ Importing/Exporting Playbooks
 
 X-Play now has the ability to import and export playbooks across Prism Centrals. In the example below we will show how to import the playbook that is created in the preceding steps. The user will still need to create the alert policies and go through the workflow to trigger the alert as listed in the steps in the previous section. We recommend reading through the steps to create the playbook and understanding them properly. 
 
-#. Download the following file which is an export of the playbook you will need.
+#. Download the following file which is an export of the playbook you will need. https://drive.google.com/file/d/1f5utfXCp1MJZc-KIxGQwkigkxVnd4OVp/view?usp=sharing
 
 #. Go to Playbooks page and click on **Import** 
 
