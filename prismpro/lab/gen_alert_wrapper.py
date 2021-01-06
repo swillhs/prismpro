@@ -14,13 +14,13 @@ it on the cluster.
 # params are configured in a json file and the input file passed as command
 # line params.
 # Copy this file, alert_generate_util.py and the input json file under
-# ~/ncc/bin directory into the CVM. To execute the script,
+# ~/serviceability/bin directory into the CVM. To execute the script,
 #
-# Eg, python /home/nutanix/ncc/bin/gen_alert_wrapper.py /home/nutanix/ncc/bin/
+# Eg, python /home/nutanix/serviceability/bin/gen_alert_wrapper.py /home/nutanix/serviceability/bin/
 #        alert_wrapper_input.json
-# Eg, python /home/nutanix/ncc/bin/gen_alert_wrapper.py /home/nutanix/ncc/bin/
+# Eg, python /home/nutanix/serviceability/bin/gen_alert_wrapper.py /home/nutanix/serviceability/bin/
 #        alert_wrapper_input.json A1001
-# Eg, python /home/nutanix/ncc/bin/gen_alert_wrapper.py /home/nutanix/ncc/bin/
+# Eg, python /home/nutanix/serviceability/bin/gen_alert_wrapper.py /home/nutanix/serviceability/bin/
 #        alert_wrapper_input.json A1001,A1005,A1044
 #
 #   alert_wrapper_input.json can be edited to include newer alerts
@@ -41,7 +41,7 @@ it on the cluster.
 
 from alert_generate_util import AlertGenerateUtil
 import sys
-sys.path.insert(0, '/home/nutanix/ncc/bin')
+sys.path.insert(0, '/home/nutanix/serviceability/bin')
 import env
 import json
 import random
@@ -56,7 +56,7 @@ from alerts.interface.notification_pb2 import *
 FLAGS = gflags.FLAGS
 
 gflags.DEFINE_string("alert_rca_config_file",
-                     "/home/nutanix/ncc/bin/alert_wrapper_input.json",
+                     "/home/nutanix/serviceability/bin/alert_wrapper_input.json",
                      "File contains all RCA alerts params")
 
 gflags.DEFINE_string("plugin_file",
