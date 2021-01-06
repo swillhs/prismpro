@@ -2,7 +2,7 @@
 
 .. toctree::
   :maxdepth: 2
-  :caption: Prism Pro Labs
+  :caption: Prism Pro/Ultimate Labs
   :name: _prism_pro_labs
   :hidden:
 

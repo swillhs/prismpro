@@ -10,7 +10,7 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.5",
     "express": "4.17.0",
-    "http-proxy": "^1.11.1",
+    "http-proxy": "^1.18.1",
     "request": "^2.88.0"
   },
   "devDependencies": {

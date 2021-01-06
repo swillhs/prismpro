@@ -28,7 +28,7 @@ it on the cluster.
 # pylint: disable=no-value-for-parameter, multiple-imports
 
 import sys
-sys.path.insert(0, '/home/nutanix/ncc/bin')
+sys.path.insert(0, '/home/nutanix/serviceability/bin')
 import os
 import re
 import env

@@ -1,11 +1,8 @@
 //
-// Copyright (c) 2016 Nutanix Inc. All rights reserved.
+// Copyright (c) 2020 Nutanix Inc. All rights reserved.
 //
-// Dev server for Prism SSP.
+// Dev server for Prism Pro/Ultimate Lab
 //
-/* eslint strict: 'off' */
-/* eslint-env node */
-
 'use strict';
 
 // Load node.js package libraries.
@@ -48,27 +45,6 @@ app.use(bodyParser.json({ limit: "50mb" }))
 
 // Customization (Start)
 //----------------------
-var DEMO_VM_UUID = 'DEMO_VM';
-var ALERT_REPLACE_TITLE = 'VM has non-ASCII name.';
-var ALERT_NEW_TITLE = 'SQL server query average latency high';
-if (env.simulateBlueMedora) {
-  app.get('/api/nutanix/v3/alerts/:alert_uuid', function(req, res) {
-      var origHostPortUrl = env.proxyProtocol +'://' + PC_IP +
-        (env.proxyPort ? ':' + env.proxyPort : '');
-      var fwdURL = origHostPortUrl + req.url;
-      r.get(fwdURL, function(error, response, body) {
-        var result = JSON.parse(body);
-        if (result && result.status && result.status.resources && result.status.resources.title === ALERT_REPLACE_TITLE) {
-          var data = fs.readFileSync(sampleData + "/bluemedora/alert_details.json", 'utf8');
-          var date = Date.now() - (3600000 * 10);
-          data = data.replace(/XXXXXXXX/gi, date);
-          data = JSON.parse(data);
-          result.status.resources = Object.assign({}, result.status.resources, data.resources);
-        }
-        res.json(result);
-      });
-  });
-}
 
 if (env.simulatePrismPro) {
   var VM_TYPES = ['bootcamp_inactive', 'bootcamp_constrained', 'bootcamp_good', 'bootcamp_overprovisioned', 'bootcamp_op_constrained'];
@@ -94,7 +70,9 @@ if (env.simulatePrismPro) {
     var MILLISECONDS_PER_HOUR = '3600000';
     var MILLISECONDS_PER_DAY = 24 * MILLISECONDS_PER_HOUR;
     var range = '';
-    if (difference < 25 * MILLISECONDS_PER_HOUR && difference > 23 * MILLISECONDS_PER_HOUR) {
+    if (difference < 2 * MILLISECONDS_PER_HOUR && difference > 0 * MILLISECONDS_PER_HOUR) {
+      range = 'last_1';
+    } else if (difference < 25 * MILLISECONDS_PER_HOUR && difference > 23 * MILLISECONDS_PER_HOUR) {
       range = 'last_24';
     } else if (difference < 8 * MILLISECONDS_PER_DAY && difference > 6 * MILLISECONDS_PER_DAY) {
       range = 'last_week';
@@ -157,39 +135,6 @@ if (env.simulatePrismPro) {
       return;
     }
     switch(body.entity_type) {
-      case 'alert':
-        if (env.simulateBlueMedora) {
-          const body = req.body;
-          var origHostPortUrl = env.proxyProtocol +'://' + PC_IP +
-            (env.proxyPort ? ':' + env.proxyPort : '');
-          var payload = JSON.stringify(body);
-          var fwdURL = origHostPortUrl + req.url;
-          r.post(fwdURL, { 'body' : payload }, function(error, response, body) {
-            var result = JSON.parse(body);
-            if (result && result.group_results && result.group_results[0] && result.group_results[0].entity_results) {
-              result.group_results[0].entity_results.map(function(alert) {
-                if (alert && alert.data) {
-                  alert.data.map(function(d) {
-                    if (d.name === 'title' && d.values && d.values[0] && d.values[0].values && d.values[0].values[0] === ALERT_REPLACE_TITLE) {
-                      d.values[0].values = [ALERT_NEW_TITLE];
-                      // Loop through find the impact type and set it to performance
-                      alert.data.map(function(d2) {
-                        if (d2.name === 'impact_type' && d2.values && d2.values[0] && d2.values[0].values) {
-                          d2.values[0].values = ['Performance'];
-                        }
-                      });
-                    }
-
-                  })
-                }
-              })
-            }
-            res.json(result);
-          });
-          return;
-        }
-        next();
-        break;
       case 'event':
         if(body.query_name === 'prism:EntityEventQueryModel' && body.filter_criteria && body.filter_criteria.indexOf('vm=cs=bootcamp_good') >= 0) {
           var date = Date.now() - 13300000;
@@ -199,175 +144,9 @@ if (env.simulatePrismPro) {
           res.json(data);
           return;
         }
-        if (env.simulateBlueMedora) {
-          if (req.body.filter_criteria &&
-            req.body.filter_criteria.indexOf('vm=cs=' + DEMO_VM_UUID) > -1) {
-            var data = fs.readFileSync(sampleData + "/bluemedora/anomaly_cpu_usage.json", 'utf8');
-            var date = Date.now() - (3600000 * 10);
-            var cpu_date = Date.now() - (3600000 * 13);
-            data = data.replace(/XXXXXXXX/mgi, date * 1000);
-            data = data.replace(/YYYYYYYY/mgi, cpu_date * 1000);
-            res.json(JSON.parse(data));
-            return;
-          }
-        }
         next();
         break;
       case 'mh_vm':
-        if (env.simulateBlueMedora) {
-          if(req.body.group_member_attributes && req.body.group_member_attributes.length) {
-          const attribute = req.body.group_member_attributes[0].attribute;
-            if (attribute.indexOf('cache_hit_ratio') > -1) {
-              var data = fs.readFileSync(sampleData + "/bluemedora/cache_hit_ratio.json", 'utf8');
-              data = JSON.parse(data);
-              var items = data.group_results[0].entity_results[0].data;
-              var now = Date.now() * 1000;
-              items.forEach(function(item) {
-                var start = now;
-                item.values.forEach(function(value) {
-                  value.time = start;
-                  start = start - 300000000
-                });
-              });
-              res.json(data);
-              return;
-            }
-            if (attribute.indexOf('query_io_latency') > -1) {
-              var data = fs.readFileSync(sampleData + "/bluemedora/query_io_latency.json", 'utf8');
-              data = JSON.parse(data);
-              var items = data.group_results[0].entity_results[0].data;
-              var now = Date.now() * 1000;
-              items.forEach(function(item) {
-                var start = now;
-                var unitvalue;
-                var midvalue = (Date.now() - (3600000 * 10)) * 1000;
-                var metricName = item.name;
-                item.values.forEach(function(value) {
-                  value.time = start;
-                  start = start - 300000000
-                });
-              });
-              res.json(data);
-              return;
-            }
-
-            if (attribute.indexOf('disk_byte_usage') > -1) {
-              var data = fs.readFileSync(sampleData + "/bluemedora/disk_byte_usage.json", 'utf8');
-              data = JSON.parse(data);
-              var items = data.group_results[0].entity_results[0].data;
-              var now = Date.now() * 1000;
-              items.forEach(function(item) {
-                var start = now;
-                var midvalue = (Date.now() - (3600000 * 10)) * 1000;
-                var unitvalue;
-                var metricName = item.name;
-                item.values.forEach(function(value) {
-                  value.time = start;
-                  if(metricName === 'disk_byte_usage') {
-                    if(start > midvalue) {
-                      unitvalue = 4000000000 + (Math.random() * (100000000 + 0) - 0);
-                    } else {
-                      unitvalue = 2000000000 + (Math.random() * (100000000 + 0) - 0);
-                    }
-                  } else if(metricName === 'capacity.disk_byte_usage.upper_buff') {
-                    unitvalue = 3000000000;
-                  } else {
-                    unitvalue = 1000000000;
-                  }
-                  value.values = [unitvalue];
-                  start = start - 300000000
-                });
-              });
-              res.json(data);
-              return;
-            }
-
-            if (attribute.indexOf('number_of_queries') > -1) {
-              var data = fs.readFileSync(sampleData + "/bluemedora/number_of_queries.json", 'utf8');
-              data = JSON.parse(data);
-              var items = data.group_results[0].entity_results[0].data;
-              var now = Date.now() * 1000;
-              items.forEach(function(item) {
-                var start = now;
-                var midvalue = (Date.now() - (86400000 / 2)) * 1000;
-                var unitvalue;
-                var metricName = item.name;
-                item.values.forEach(function(value) {
-                  value.time = start;
-                  if(metricName === 'number_of_queries') {
-                    unitvalue = 50 + (Math.random() * (10 + 10) -10);
-                  } else if(metricName === 'capacity.number_of_queries.upper_buff') {
-                    unitvalue = 80;
-                  } else {
-                    unitvalue = 30;
-                  }
-                  value.values = [unitvalue];
-                  start = start - 300000000
-                });
-              });
-              res.json(data);
-              return;
-            }
-
-            if (attribute === 'cpu_usage' || attribute === 'capacity.cpu_usage.upper_buff' || attribute === 'capacity.cpu_usage.lower_buff') {
-              var data = fs.readFileSync(sampleData + "/bluemedora/cpu_usage_ppm.json", 'utf8');
-              data = JSON.parse(data);
-              var items = data.group_results[0].entity_results[0].data;
-              var now = Date.now() * 1000;
-              items.forEach(function(item) {
-                var start = now;
-                var midvalue = (Date.now() - ((86400000 / 24) * 14)) * 1000;
-                var unitvalue;
-                var metricName = item.name;
-                item.values.forEach(function(value) {
-                  value.time = start;
-                  if(metricName === 'cpu_usage') {
-                    if(start > midvalue) {
-                      unitvalue = 700000 + (Math.random() * (50000 + 50000) - 50000);
-                    } else {
-                      unitvalue = 400000 + (Math.random() * (50000 + 50000) - 50000);
-                    }
-                  } else if(metricName === 'capacity.cpu_usage.upper_buff') {
-                    unitvalue = 600000;
-                  } else {
-                    unitvalue = 300000;
-                  }
-                  value.values = [unitvalue];
-                  start = start - 300000000
-                });
-              });
-              res.json(data);
-              return;
-            }
-
-            if (attribute.indexOf('number_of_connections') > -1) {
-              var data = fs.readFileSync(sampleData + "/bluemedora/number_of_connections.json", 'utf8');
-              data = JSON.parse(data);
-              var items = data.group_results[0].entity_results[0].data;
-              var now = Date.now() * 1000;
-              items.forEach(function(item) {
-                var start = now;
-                var midvalue = (Date.now() - (86400000 / 2)) * 1000;
-                var unitvalue;
-                var metricName = item.name;
-                item.values.forEach(function(value) {
-                  value.time = start;
-                  if(metricName === 'number_of_connections') {
-                    unitvalue = 30 + (Math.random() * (5 + 5) - 5);
-                  } else if(metricName === 'capacity.number_of_connections.upper_buff') {
-                    unitvalue = 40;
-                  } else {
-                    unitvalue = 10;
-                  }
-                  value.values = [unitvalue];
-                  start = start - 300000000
-                });
-              });
-              res.json(data);
-              return;
-            }
-          }
-        }
         var type = getVmType(body.entity_ids);
         if (isStatsQuery(body) && type) {
           try {
@@ -403,7 +182,7 @@ if (env.simulatePrismPro) {
             console.log(e);
             next();
           }
-        } else if (body.filter_criteria && body.filter_criteria.indexOf('(capacity%2Evm_efficiency_status==.*[i|I][n|N][a|A][c|C][t|T][i|I][v|V][e|E].*,capacity%2Evm_efficiency_status==.*[b|B][u|U][l|L][l|L][y|Y].*,capacity%2Evm_efficiency_status==.*[c|C][o|O][n|N][s|S][t|T][r|R][a|A][i|I][n|N][e|E][d|D].*,capacity%2Evm_efficiency_status==.*[o|O][v|V][e|E][r|R][p|P][r|R][o|O][v|V][i|I][s|S][i|I][o|O][n|N][e|E][d|D].*)') > -1) {
+        } else if (body.filter_criteria && body.filter_criteria.indexOf('(capacity%2Evm_efficiency_status==.*[c|C][o|O][n|N][s|S][t|T][r|R][a|A][i|I][n|N][e|E][d|D].*,capacity%2Evm_efficiency_status==.*[i|I][n|N][a|A][c|C][t|T][i|I][v|V][e|E].*,capacity%2Evm_efficiency_status==.*[b|B][u|U][l|L][l|L][y|Y].*,capacity%2Evm_efficiency_status==.*[o|O][v|V][e|E][r|R][p|P][r|R][o|O][v|V][i|I][s|S][i|I][o|O][n|N][e|E][d|D].*)') > -1) {
           var filedata = fs.readFileSync(sampleData +  '/prismpro/efficiency.json');
           var data = filedata && JSON.parse(filedata);
           res.json(data.all);
@@ -549,10 +328,6 @@ var proxyFunction = function(req, resp) {
   }
 };
 
-if (env.simulateBlueMedora) {
-  app.use(express['static']('ntnx_cloud'));
-}
-
 // Prism Central Routing
 //----------------------
 // Redirect to console always.
@@ -560,9 +335,6 @@ app.get('/', function(req, resp) {
   if (!PC_IP || !PC_UI_PASS || !PC_UI_USER) {
     // Take the user to enter their credentials.
     resp.sendfile('public/index.html');
-  } else if (env.simulateBlueMedora) {
-    // Send the local build
-    resp.sendfile('ntnx_cloud/index.html');
   } else {
     // Redirect to console to serve up the static UI files.
     resp.redirect('/console/');
@@ -601,25 +373,18 @@ app.get(/console/, function(req, resp) {
     } else {
       proxyFunction(req, resp);
     }
-  } else if (env.simulateBlueMedora && req.path.indexOf('console/lib') === -1) {
-    resp.redirect('/');
   } else {
     proxyFunction(req, resp);
   }
 });
 app.get(/\/app-extension\/scripts\/(.*)/ , function(req, res) {
   var path = req.path.replace('/ssp/', '/');
-  if (env.simulateBlueMedora) {
-    // Send the local build
-    res.sendfile('ntnx_cloud' + path);
-  } else {
-    proxyFunction(req, res);
-  }
+  proxyFunction(req, res);
 });
 // For calm to work
 app.get(/apps\/(.*)/,proxyFunction);
 // Proxy API calls
-app.all(/PrismGateway\/(.*)|api\/nutanix\/v(.*)\/(.*)|static\/(.*)/, proxyFunction);
+app.all(/PrismGateway\/(.*)|api\/|static\/(.*)/, proxyFunction);
 // Serve up the swagger.json
 app.get(staticUrl + 'swagger.json', function(req, res) {
   // Customize response
@@ -635,7 +400,7 @@ app.get('/alerts', function (req, res){
 });
 
 app.get('/alerts/', function (req, res){
-  resp.redirect('/alerts');
+  res.sendfile('public/index.html');
 });
 
 app.get('/debug', function (req, res){
@@ -651,7 +416,7 @@ app.get('/stress', function (req, res){
 });
 
 app.get('/stress/', function (req, res){
-  resp.redirect('/stress');
+  res.sendfile('public/index.html');
 });
 
 app.get('/ticketsystem', function (req, res) {
@@ -659,15 +424,7 @@ app.get('/ticketsystem', function (req, res) {
 });
 
 app.get('/ticketsystem/', function (req, res) {
-  resp.redirect('/ticketsystem');
-});
-
-app.get('/databases', function (req, res) {
   res.sendfile('public/index.html');
-});
-
-app.get('/databases/', function (req, res) {
-  resp.redirect('/databases');
 });
 
 app.get(/\/public\/(.*)/, function (req, res) {
