@@ -9,6 +9,7 @@
   prismops_capacity_lab/prismops_capacity_lab
   prismops_rightsize_lab/prismops_rightsize_lab
   prismpro_xplay/prismpro_xplay
+  prismops_appmonitoring_lab/prismops_appmonitoring_lab
   beam_cost_governance/beam_cost_governance
 
 .. toctree::
