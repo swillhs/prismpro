@@ -6,7 +6,7 @@
 Cost Governance with Xi Beam
 ----------------------------
 
-Xi Beam is a cost governance and security compliance service that works with both public clouds and Nutanix Private Cloud. This lab introduces Beam’s cost governance capabilities for Nutanix and AWS. Similar capabilities are available for Azure. Beam's on-premise cost covergance capabilities are now licensed under the Prism Ultimate offering. 
+Xi Beam is a cost governance and security compliance service that works with both public clouds and Nutanix Private Cloud. This lab introduces Beam’s cost governance capabilities for Nutanix and AWS. Similar capabilities are available for Azure. Beam's on-premise cost governance capabilities are now licensed under the Prism Ultimate offering. 
 
 .. figure:: images/beam_vm_costing.png
 
