@@ -56,7 +56,7 @@ Using machine learning, Prism Pro then analyzes the data and applies a classific
    * **Automation:** Use some other method of automation such as powershell or REST-API to resize a VM.
 
 
-Increase Constrained VM Memory with X-Play based on Conitional Execution
+Increase Constrained VM Memory with X-Play based on Conditional Execution
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 Now let’s look at how we can take automated action to resolve some of these inefficiencies. For this lab we will assume that this VM is constrained for memory, and will show how we can automatically remediate the right sizing of this VM. We will also use a custom ticket system to give an idea of how this typical workflow could integrate with ticketing system such as ServiceNow and use string parsing and conditional execution, two of our latest capabilities added into X-Play. 
@@ -257,7 +257,7 @@ X-Play now has the ability to import and export playbooks across Prism Centrals.
 
  .. figure:: images/import2.png
 
-#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwrods**, **URLs** and **IP Addresses** is updated according to your environment. Click on **Update*8 to change fields in the playbook. Refer to the playbook creation steps above to confirm these fields.
+#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwrods**, **URLs** and **IP Addresses** is updated according to your environment. Click on **Update** to change fields in the playbook. Refer to the playbook creation steps above to confirm these fields.
 
 #. First you will need to specify your VM for the alert. Click on the trigger, make sure it is the right Alert Policy and choose your VM from the dropdown. 
 
