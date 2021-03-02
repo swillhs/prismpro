@@ -6,6 +6,7 @@
   :name: _prism_pro_labs
   :hidden:
 
+  labsetup/labsetup
   prismops_capacity_lab/prismops_capacity_lab
   prismops_rightsize_lab/prismops_rightsize_lab
   prismpro_xplay/prismpro_xplay
@@ -27,7 +28,15 @@
 Getting Started
 ---------------
 
-Welcome to the Prism Ultimate Bootcamp.
+.. figure:: images/operationstriangle.png
+
+Prism Pro brings smart automation to our customer’s daily IT operations. The typical operations workflow is a continuous cycle of monitoring, analyzing and taking action where necessary. Prism Pro mirrors traditional IT Admin's workflows to improve operations efficiency. With Prism Pro, IT Admins are able to connect insights from machine data to automate this typical flow using the power of the machine learning engine X-FIT and the X-Play automation engine.
+
+Prism Pro brings smart automation to our customer’s daily IT operations. The typical operations workflow is a continuous cycle of monitoring, analyzing and taking action where necessary. Prism Pro mirrors traditional IT Admin's workflows to improve operations efficiency. With Prism Pro, IT Admins are able to connect insights from machine data to automate this typical flow using the power of the machine learning engine X-FIT and the X-Play automation engine.
+
+Prism Pro brings smart automation to our customer’s daily IT operations. With Prism Ultimate we expand this smart automation and intelligent learning to the application and services layers. The typical operations workflow is a continuous cycle of monitoring, analyzing and taking action where necessary. Prism Pro mirrors traditional IT Admin's workflows to improve operations efficiency and Prism Ultimate combines that with full-stack visibility. With Prism Ultimate, IT Admins are able to connect insights from application machine data to automate this typical flow using the power of the machine learning engine X-FIT and the X-Play automation engine.
+
+
 
 What's New
 ++++++++++
@@ -41,14 +50,10 @@ Agenda
 
 - Introductions
 - Lab Setup
-
-Era with MSSQL Track
-....................
-
-- Configure MSSQL
-- Admin MSSQL with Era
-- Deploy MSSQL with Era
-- Patching MSSQL
+- Prism Pro Capacity Runway
+- Right-sizing VMs with Prism Pro
+- Application Monitoring with Prism Ultimate
+- Cost Governance with Xi Beam
 
 Introductions
 +++++++++++++
