@@ -32,7 +32,7 @@ Getting Started
 
 Operations in Prism are designed to connect machine signals to operational actions that pop up in the day to day life of an IT admin. Prism Pro brings smart automation to our customer’s daily IT operations. With Prism Ultimate we expand this smart automation and intelligent learning to the application and services layers. The typical operations workflow is a continuous cycle of monitoring, analyzing and taking action where necessary. Prism Pro mirrors traditional IT Admin's workflows to improve operations efficiency and Prism Ultimate combines that with full-stack visibility. With Prism Ultimate, IT Admins are able to connect insights from application machine data to automate this typical flow using the power of the machine learning engine X-FIT and the X-Play automation engine.
 
-In this bootcamp, you will run through 4 different labs starting with a look at the cluster Capacity Planning and automating the generation and communication of a runway forecast report. The 2nd lab will involve right-sizing a VM in the event of an inefficiency alert being triggered on the VM showcasing a IFTTT workflow using X-Play and an in-built ticketing system. The 3rd lab introduces Prism Ultimate - Setup application monitoring on a SQL Server and create a playbook to collect logs from the VM when the server is stressed, also look at Application Discovery to export a list of the applications running on your cluster. Last go through the cost governance lab with Xi Beam, whose on-premise capabilities are now licensed under Prism Ultimate. 
+In this bootcamp, you will run through 4 different labs starting with a look at the cluster Capacity Planning and automating the generation and communication of a runway forecast report. The 2nd lab will involve right-sizing a VM in the event of an inefficiency alert being triggered on the VM showcasing a IFTTT workflow using X-Play and an in-built ticketing system. The 3rd lab introduces Prism Ultimate - Setup application monitoring on a SQL Server and create a playbook to collect logs from the VM when the server is stressed, also look at Application Discovery to export a list of the applications running on your cluster. Last go through the cost governance lab with Xi Beam, whose on-premise capabilities are now licensed under Prism Ultimate.
 
 
 What's New
@@ -87,7 +87,7 @@ For example:
 
 - **Cluster Name** - POC055
 - **Subnet** - 10.38.55.0
-- **Cluster IP** - 10.21.55.37 for the VIP of the Cluster
+- **Cluster IP** - 10.38.55.37 for the VIP of the Cluster
 
 
 Throughout the Workshop there are multiple instances where you will need to substitute *XYZ* with the correct octet for your subnet, for example:
@@ -118,11 +118,11 @@ Each cluster is configured with 2 VLANs which can be used for VMs:
   * - Primary
     - 10.38.\ *XYZ*\ .1/25
     - 0
-    - 10.38.\ *XYZ*\ .50-10.21.\ *XYZ*\ .124
+    - 10.38.\ *XYZ*\ .50-10.38.\ *XYZ*\ .124
   * - Secondary
     - 10.38.\ *XYZ*\ .129/25
     - *XYZ1*
-    - 10.38.\ *XYZ*\ .132-10.21.\ *XYZ*\ .253
+    - 10.38.\ *XYZ*\ .132-10.38.\ *XYZ*\ .253
 
 Single Node HPOC Clusters
 -------------------------
