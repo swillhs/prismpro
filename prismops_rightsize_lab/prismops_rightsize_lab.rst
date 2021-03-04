@@ -2,9 +2,8 @@
 Right-sizing VMs with Prism Pro
 -------------------------------
 
-.. figure:: images/operationstriangle.png
-
-Prism Pro brings smart automation to our customer’s daily IT operations. The typical operations workflow is a continuous cycle of monitoring, analyzing and taking action where necessary. Prism Pro mirrors traditional IT Admin's workflows to improve operations efficiency. With Prism Pro, IT Admins are able to connect insights from machine data to automate this typical flow using the power of the machine learning engine X-FIT and the X-Play automation engine.
+Overview
++++++++++
 
 In this lab you will learn how Prism Pro can help IT Admins monitor, analyze and automatically act when a VM's memory resource is constrained.
 
@@ -56,10 +55,10 @@ Using machine learning, Prism Pro then analyzes the data and applies a classific
    * **Automation:** Use some other method of automation such as powershell or REST-API to resize a VM.
 
 
-Increase Constrained VM Memory with X-Play based on Conitional Execution
+Increase Constrained VM Memory with X-Play based on Conditional Execution
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Now let’s look at how we can take automated action to resolve some of these inefficiencies. For this lab we will assume that this VM is constrained for memory, and will show how we can automatically remediate the right sizing of this VM. We will also use a custom ticket system to give an idea of how this typical workflow could integrate with ticketing system such as ServiceNow and use string parsing and conditional execution, two of our latest capabilities added into X-Play. 
+Now let’s look at how we can take automated action to resolve some of these inefficiencies. For this lab we will assume that this VM is constrained for memory, and will show how we can automatically remediate the right sizing of this VM. We will also use a custom ticket system to give an idea of how this typical workflow could integrate with ticketing system such as ServiceNow and use string parsing and conditional execution, two of our latest capabilities added into X-Play.
 
 #. Navigate to your **`Initials`-LinuxToolsVM**. The examples will use a VM called **ABC - LinuxToolsVM**. Note the current **Memory Capacity** of the VM, as we will later increase it with X-Play. You may need to scroll down within the **Properties** widget to find this value.
 
@@ -69,7 +68,7 @@ Now let’s look at how we can take automated action to resolve some of these in
 
    .. figure:: images/navigateplaybook.png
 
-#. We will need to create a couple of Playbooks for this workflow to be possible. Let's start by clicking **Create Playbook**. We will first be creating the Playbook that will be increasing the Memory of the VM. We want to create a playbook that reads in a string coming from the ticket system (approved or denied in our case) and have conditional branching and execution of the next steps accordingly. 
+#. We will need to create a couple of Playbooks for this workflow to be possible. Let's start by clicking **Create Playbook**. We will first be creating the Playbook that will be increasing the Memory of the VM. We want to create a playbook that reads in a string coming from the ticket system (approved or denied in our case) and have conditional branching and execution of the next steps accordingly.
 
    .. figure:: images/rs3b.png
 
@@ -81,7 +80,7 @@ Now let’s look at how we can take automated action to resolve some of these in
 
    .. figure:: images/rs17.png
 
-#. The first action we will add is the newly added String Parse action. This action allows the user to parse data coming from a string which can then subsequently be used in the succeeding actions. 
+#. The first action we will add is the newly added String Parse action. This action allows the user to parse data coming from a string which can then subsequently be used in the succeeding actions.
 
    .. figure:: images/addparse.png
 
@@ -140,7 +139,7 @@ Now let’s look at how we can take automated action to resolve some of these in
 
 #. Click **Save & Close** button and save it with a name “*Initials* - Resolve Service Ticket”. **Be sure to enable the ‘Enabled’ toggle.**
 
-#. For the next part of this lab, if you understand how to set up Playbooks already and wish to do so, you have the option to skip the setup of the next Playbook. Instead follow the steps under the Importing/Exporting Playbooks section below. We recommend reading through the steps to create the Playbook to better understand what it is doing. 
+#. For the next part of this lab, if you understand how to set up Playbooks already and wish to do so, you have the option to skip the setup of the next Playbook. Instead follow the steps under the Importing/Exporting Playbooks section below. We recommend reading through the steps to create the Playbook to better understand what it is doing.
 
 #. Next we will create a custom action to be used in our 2nd playbook. Click on **Action Gallery** from the left hand side menu. **If you chose to import the Playbook for this lab instead of creating it, you may skip this step**
 
@@ -222,7 +221,7 @@ Now let’s look at how we can take automated action to resolve some of these in
    .. figure:: images/deniedplay.png
 
 
-#. Now navigate back to the ticket system either using the link in the denied email or going directly to http://`<PrismOpsLabUtilityServer_IP_ADDRESS>`/ticketsystem. Identify the ticket created for your VM, and click the vertical dots icon to show the Action menu. Click the **Approve** option. This will call the Webhook that was passed in the REST API to generate the service ticket, which will trigger the Resolve Service Ticket Playbook. It will pass on the condition for branching action and execute the **Approved** workflow. It will also pass on the information for the VM and Alert that triggered the workflow so the following actions to add memory and resolve alert are also executed. 
+#. Now navigate back to the ticket system either using the link in the denied email or going directly to http://`<PrismOpsLabUtilityServer_IP_ADDRESS>`/ticketsystem. Identify the ticket created for your VM, and click the vertical dots icon to show the Action menu. Click the **Approve** option. This will call the Webhook that was passed in the REST API to generate the service ticket, which will trigger the Resolve Service Ticket Playbook. It will pass on the condition for branching action and execute the **Approved** workflow. It will also pass on the information for the VM and Alert that triggered the workflow so the following actions to add memory and resolve alert are also executed.
 
    .. figure:: images/ticketoption.png
 
@@ -241,15 +240,15 @@ Now let’s look at how we can take automated action to resolve some of these in
 Importing/Exporting Playbooks
 +++++++++++++++++++++++++++++++++++++++++++
 
-X-Play now has the ability to import and export playbooks across Prism Centrals. In the example below we will show how to import the playbook that is created in the preceding steps. The user will still need to create the alert policies and go through the workflow to trigger the alert as listed in the steps in the previous section. We recommend reading through the steps to create the playbook and understanding them properly. 
+X-Play now has the ability to import and export playbooks across Prism Centrals. In the example below we will show how to import the playbook that is created in the preceding steps. The user will still need to create the alert policies and go through the workflow to trigger the alert as listed in the steps in the previous section. We recommend reading through the steps to create the playbook and understanding them properly.
 
 #. Download the following file which is an export of the playbook you will need. https://drive.google.com/file/d/1f5utfXCp1MJZc-KIxGQwkigkxVnd4OVp/view?usp=sharing
 
-#. Go to Playbooks page and click on **Import** 
+#. Go to Playbooks page and click on **Import**
 
  .. figure:: images/import0.png
 
-#. You will need to choose the Binary file that you downloaded as the playbook to import. 
+#. You will need to choose the Binary file that you downloaded as the playbook to import.
 
  .. figure:: images/import1.png
 
@@ -257,17 +256,17 @@ X-Play now has the ability to import and export playbooks across Prism Centrals.
 
  .. figure:: images/import2.png
 
-#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwrods**, **URLs** and **IP Addresses** is updated according to your environment. Click on **Update*8 to change fields in the playbook. Refer to the playbook creation steps above to confirm these fields.
+#. Click on the playbook that has just been imported for you - there will be a time stamp in the playbook name. Once open the you will see that the actions that have validation errors have been highlighted. Even for actions that have not been highlighted make sure to confirm that the information such as **Passwrods**, **URLs** and **IP Addresses** is updated according to your environment. Click on **Update** to change fields in the playbook. Refer to the playbook creation steps above to confirm these fields.
 
-#. First you will need to specify your VM for the alert. Click on the trigger, make sure it is the right Alert Policy and choose your VM from the dropdown. 
+#. First you will need to specify your VM for the alert. Click on the trigger, make sure it is the right Alert Policy and choose your VM from the dropdown.
 
  .. figure:: images/rsimport2.png
 
-#. Then you will need the change the **URL** in the **Generate Service Ticket** action. Change the IP Address to your **<PrismOpsLabUtilityServer_IP_ADDRESS>** in the URL. 
+#. Then you will need the change the **URL** in the **Generate Service Ticket** action. Change the IP Address to your **<PrismOpsLabUtilityServer_IP_ADDRESS>** in the URL.
 
  .. figure:: images/rsimport3.png
 
-#. Last, make sure the email address in the **Email** action is updated to your email address. 
+#. Last, make sure the email address in the **Email** action is updated to your email address.
 
  .. figure:: images/rsimport4.png
 
