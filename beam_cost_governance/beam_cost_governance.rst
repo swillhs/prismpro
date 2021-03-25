@@ -6,7 +6,7 @@
 Cost Governance with Xi Beam
 ----------------------------
 
-Xi Beam is a cost governance and security compliance service that works with both public clouds and Nutanix Private Cloud. This lab introduces Beam’s cost governance capabilities for Nutanix and AWS. Similar capabilities are available for Azure. Beam's on-premise cost governance capabilities are now licensed under the Prism Ultimate offering. 
+Xi Beam is a cost governance and security compliance service that works with both public clouds and Nutanix Private Cloud. This lab introduces Beam’s cost governance capabilities for Nutanix and AWS. Similar capabilities are available for Azure.
 
 .. figure:: images/beam_vm_costing.png
 
@@ -59,7 +59,7 @@ Beam is a SaaS service and does not require any on-premises installation for cos
 
 	.. figure:: images/beam_02.png
 	
-#. Next if it shows a View Selector screen, Select Nutanix and account shown.
+#. Next from View Selector screen, Select Nutanix and account shown.
 	
 	.. figure:: images/beam_03
 
@@ -88,7 +88,9 @@ Product Costs
 
 The next step is to ensure Beam has accurate license cost data for all Nutanix products.
 
-#. From the menu icon at the top left of the portal, select **Configure > Nutanix Cost Configuration**.
+#. Under **Cost Configuration**, select **Nutanix**.
+
+	.. figure:: images/beam_04b.png
 
 	Once you’ve entered the license key, Beam populates the customer's entire Nutanix purchase history from their Salesforce account. Beam automatically populates product costs based on assumed market price for all Nutanix products - hardware and software. The actual cost paid by customers may vary slightly depending on the final pricing from Nutanix resellers, which is unavailable to Beam.
 
@@ -101,11 +103,11 @@ The next step is to ensure Beam has accurate license cost data for all Nutanix p
 TCO Configuration
 .................
 
-Beam uses a built-in **total cost of ownership (TCO) model** for Nutanix that provides out-of-the-box visibility into the true cost of running the Nutanix private cloud. These costs are eventually used to calculate granular VM level costs. It is important to configure the TCO model accurately so that you have more accurate VM costs.
+Beam uses a built-in **Total Cost of Ownership (TCO) model** for Nutanix that provides out-of-the-box visibility into the true cost of running the Nutanix private cloud. These costs are eventually used to calculate granular VM level costs. It is important to configure the TCO model accurately so that you have more accurate VM costs.
 
 The TCO model includes several cost heads that are automatically populated depending on the number of Nutanix nodes and some industry standards that are built into the model. The out-of-the-box TCO calculations provide a good faith level of accuracy and can be further fine-tuned to customer specifics. Learn how to configure the TCO model:
 
-#. In **Configure > Nutanix Cost Configuration**, select the **Cluster** tab, and search for cluster ID ending in **4d3b**.
+#. In **Configure > Nutanix Cost Configuration**, select the **Cluster** tab, and search for cluster ID ending in **7908**.
 
 #. Click on **Edit TCO** next to that cluster.
 
@@ -174,7 +176,7 @@ Next, the cluster level costs are automatically allocated to individual VMs runn
 
 The total cluster level costs (calculated using the TCO model) are allocated to each VM depending on the number of hours that the VM is up and running and the capacity allocated to that VM relative to the overall capacity on the cluster. The CBL model is used to calculate cost per vCPU, cost per GB of storage and cost per GB of RAM. Those per unit costs are multiplied by the number of vCPUs, storage and memory allocated to each VM to get total VM costs. These VM costs are calculated out-of-the-box without needing any customer configuration.
 
-#. From the menu item at top left, select **Analyze > VM Costing** and search for **Cluster ID** ending in **4d3b**.
+#. From the menu item at top left, select **Analyze > VM Costing** and search for **Cluster ID** ending in **7908**.
 
 	.. figure:: images/beam_14.png
 
@@ -221,8 +223,8 @@ Creating a Cost Center
 #. Fill out the following fields:
 
 	- **Cloud** - Nutanix
-	- **Parent Account** - Nutanix Cost Demo Account
-	- **Sub Accounts** - *Search for the Cluster ID ending in* 4d3b
+	- **Parent Account** - Beam Lab Nutanix Account
+	- **Sub Accounts** - *Search for the Cluster ID ending in* 7908
 	- **Key Set** - nx:App
 	- **Value Set** - *Select any available* VDI### *value*
 
@@ -244,10 +246,10 @@ Creating a Cost Center
 	Fill out the following fields:
 
 	- **Cloud** - AWS
-	- **Parent Account** - Beam Engg
-	- **Sub Accounts** -  Beam Engg
-	- **Key Set** - user:user
-	- **Value Set** - *Select any available* user### *value*
+	- **Parent Account** - Beam Lab Payer Account
+	- **Sub Accounts** -  Beam Lab Payeer Account
+	- **Key Set** - user
+	- **Value Set** - *Select any available* user## *value*
 
 	.. note::
 
@@ -277,7 +279,7 @@ Not all cloud resources may be tagged with key-pairs that you specify in cost ce
 
 #. Navigate to the **Chargeback > Unallocated** spend view.
 
-#. Search for the cluster ID ending in **4d3b**.
+#. Search for the cluster ID ending in **7908**.
 
 #. Click on **View Details** to see the details of spend on this cluster that did not get allocated to any cost center.
 
@@ -287,7 +289,7 @@ Not all cloud resources may be tagged with key-pairs that you specify in cost ce
 
 #. You can also split the spend across multiple cost centers. Select the cost center you had created, **XY-BeamLab**, and allocate 100% of the spend of this VM to that cost center. You only need to do this once. Any future spending by the same VM will be automatically allocated to that cost center. The same Chargeback process can also be done for public cloud resource costs.
 
-	.. figure:: images/beam_24b.png
+	.. figure:: images/beam_24.png
 
 	This feature is extremely helpful to identify shadow spending outside of a customer’s cost center and business unit structure, and allows a financial admin to more accurately map cloud consumption to appropriate owners so that customers can be aware of who is responsible for spending in their cloud.
 
@@ -304,7 +306,7 @@ In this exercise you will define a budget for a cost center and set up a related
 
 	Alternatively, Beam also allows you to create a custom resource group using a combination of accounts, services, and tags, and then set up budget alerts on the custom resource group.
 
-#. Select the **Cost Center** you created in the previous exercise.
+#. Select the **Cost Center** you created in the previous exercise and click **Next**.
 
 	.. figure:: images/beam_26.png
 
@@ -312,7 +314,7 @@ In this exercise you will define a budget for a cost center and set up a related
 
 	This will allow you to customize values for the budget at an yearly, quarterly or monthly level.
 
-#. Enter the annual budget to be $100,000. It will be allocated equally to each month.
+#. Enter the annual budget to be $100,000. It will be allocated equally to each month. Click **Next**
 
 	.. figure:: images/beam_27.png
 
@@ -337,23 +339,23 @@ AWS Account Configuration
 
 This section will walk you through how Beam identifies cost savings for public clouds like AWS. In order to configure Beam with AWS, customers will need access to their **AWS Payer account**. Any Linked accounts associated with the Payer account will automatically be identified by Beam.
 
-From the menu at the top left go to **Dashboard** and then in the **view selector**,  select **AWS cloud**, select the **Beam Engg** Payer account.
+From the menu at the top left go to **Dashboard** and then in the **view selector**,  select **AWS cloud**, select the **Beam Lab Payer Account**.
 
 	.. figure:: images/beam_30.png
 
 .. note::
 
-	For the lab environment, an AWS Payer Account named **Beam Engg** has already been configured. You may familiarize yourself with the configuration steps
+	For the lab environment, an AWS Payer Account named **Beam Lab Payer Account** has already been configured. You may familiarize yourself with the configuration steps
 
-#. From the menu at the top left select **Configure > AWS Account**. You will see the **Beam Engg** Payer account that has been configured in this lab. Click on **Manage**
+#. From the menu at the top left select **Configure > AWS Account**. You will see the **Beam Lab Payer Account** Payer account that has been configured in this lab. Click on **Manage**
 
 	.. figure:: images/beam_30a.png
 
-#. You will see all the linked accounts associated with the **Beam Engg** Payer account have been identified by Beam. In order to find maximum cost savings, it is recommended to run the following configuration steps for the Payer account and each Linked account under that Payer account. For this lab, we will only concern ourselves with the Payer account. Click on **Edit** at the Payer account level.
+#. You will see all the linked accounts associated with the **Beam Lab Payer Account** have been identified by Beam. In order to find maximum cost savings, it is recommended to run the following configuration steps for the Payer account and each Linked account under that Payer account. For this lab, we will only concern ourselves with the Payer account. Click on **Edit** at the Payer account level.
 
 	.. figure:: images/beam_31.png
 
-#. You will see a configuration screen where customers will have to enter their **AWS Cost and Usage Report (CUR)** details. Beam identifies cost spending based on the CUR data. Observe that the CUR name and the AWS S3 storage bucket name where the CUR resides have been configured in the lab setup. Customers can specify their account name, whether they want to give read-only or read and write access to Beam, and generate a CloudFormation Template. They will run the CloudFormation Template by logging into their AWS Payer or Linked accounts to complete the setup. This will create an AWS access role for Beam and allow Beam to read their billing data from the CUR. If they give write access then they will also be able to take various one-click actions from the Beam console to act upon Beam’s cost saving recommendations.
+#. You will see a configuration screen where customers will have to enter their **AWS Cost and Usage Report (CUR)** details. Beam identifies cost spending based on the CUR data. Observe that the CUR name and the AWS S3 storage bucket name where the CUR resides have been configured in the lab setup. Customers can specify their account name, whether they want to give Spend Analysis and Optimize Recommendations to Beam or allow Beam to act on recommendations, and generate a CloudFormation Template. They will run the CloudFormation Template by logging into their AWS Payer or Linked accounts to complete the setup. This will create an AWS access role for Beam and allow Beam to read their billing data from the CUR. If they give write access then they will also be able to take various one-click actions from the Beam console to act upon Beam’s cost saving recommendations.
 
 	.. figure:: images/beam_32.png
 
@@ -374,7 +376,7 @@ Beam identifies cloud resources that have been unused for an extended period of 
 
 	..figure:: images/beam_33.png
 	
-#. Familiarize yourself with the default Beam cost policy. From the toolbar at the top right select **Configure > Cost Policy**
+#. Familiarize yourself with the default Beam cost policy. From the toolbar at the top left select **Configure > Cost Policy**
 
 	.. figure:: images/beam_33a.png
 
@@ -401,7 +403,7 @@ Beam also identifies cloud resources that are being used but not optimally and t
 
 	.. figure:: images/beam_36.png
 
-#. You will see see details of EC2 instances including their resource ID, the cloud account that they are in, and associated cost savings by changing their size from their current size to a downgraded size recommended by Beam. These recommendations are made based on CPU utilization and the optimization rules configured in Beam policy. 
+#. Selet any instance from the list. You will see see details of EC2 instances including their resource ID, the cloud account that they are in, and associated cost savings by changing their size from their current size to a downgraded size recommended by Beam. These recommendations are made based on CPU utilization and the optimization rules configured in Beam policy. 
 
 	.. figure:: images/beam_37.png
 
