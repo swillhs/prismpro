@@ -1,11 +1,9 @@
 .. _labsetup:
 
-----------------------
-Prism Ultimate Lab Setup
----------------------
-
+-------------------------
 Lab Setup
-+++++++++
+-------------------------
+
 
 #. Open your **Prism Central** and navigate to the **VMs** page. Note down the IP Address of the **PrismOpsLabUtilityServer**. You will need to access this IP Address throughout this lab.
 
@@ -23,8 +21,10 @@ Lab Setup
 
    .. figure:: images/init3.png
 
+
 Deploying a Windows Tools VM
 ++++++++++++++++++++++++++++
+
 
 Some exercises in this track will depend on leveraging the Windows Tools VM. Follow the below steps to provision your personal VM from a disk image.
 
