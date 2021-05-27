@@ -1,4 +1,4 @@
-.. title:: Prism Pro Demo Labs
+.. title:: Prism Pro Demo Labs test
 
 .. toctree::
   :maxdepth: 2
